@@ -138,15 +138,30 @@
             .footer-nav { display: none; }
         }
         @media (max-width: 768px) {
-            .page-title-section { padding: 16px 20px 16px; }
+            .breadcrumb-section { padding: 16px 20px 8px; }
+            .page-title-section { padding: 8px 20px 8px; }
             .page-title { font-size: 24px; }
-            .breadcrumb-section, .content-section { padding-left: 20px; padding-right: 20px; }
+            .tab-section { padding: 8px 0; }
             .tab-section-inner { padding-left: 0; padding-right: 0; }
-            .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; border-radius: 0; background: transparent; gap: 8px; padding: 0 20px; }
+            .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; border-radius: 0; background: transparent; gap: 6px; padding: 0 20px; }
             .tab-nav::-webkit-scrollbar { display: none; }
-            .tab-nav a { flex: 0 0 auto; padding: 12px 20px; font-size: 14px; background: #F7FAF4; }
+            .tab-nav a { flex: 0 0 auto; padding: 10px 16px; font-size: 13px; background: #F7FAF4; }
             .tab-nav a.active { background: var(--white); }
+            .content-section { padding: 20px 20px 60px; }
+            /* 게시판 모바일 3줄 리스트 */
+            .board-table { display: none; }
+            .board-list-mobile { display: block; border-top: 2px solid var(--primary); }
+            .board-list-mobile .mobile-item { display: block; padding: 16px 0; border-bottom: 1px solid var(--gray-border); }
+            .mobile-item .mobile-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+            .mobile-item .mobile-category { padding: 3px 10px; background: var(--green-light); color: var(--primary); font-size: 11px; font-weight: 600; border-radius: 12px; }
+            .mobile-item .mobile-title { flex: 1; font-size: 15px; color: var(--black); font-weight: 500; text-decoration: none; }
+            .mobile-item .mobile-title:hover { color: var(--primary); }
+            .mobile-item .mobile-title .new { display: inline-block; margin-left: 6px; padding: 2px 5px; background: var(--lime); color: var(--white); font-size: 9px; font-weight: 700; border-radius: 3px; }
+            .mobile-item .mobile-row2 { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+            .mobile-item .mobile-row3 { }
+            .mobile-item .mobile-apply { display: inline-block; padding: 6px 14px; background: var(--lime); color: var(--white); font-size: 12px; font-weight: 600; border-radius: 16px; text-decoration: none; }
         }
+        .board-list-mobile { display: none; }
     </style>
 </head>
 <body>
@@ -342,6 +357,59 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- 모바일 리스트 -->
+                <div class="board-list-mobile">
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2025년 상반기 대학 장학생 선발 공고 <span class="new">NEW</span></a></div>
+                        <div class="mobile-row2">2025-01-02 ~ 2025-02-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2025년 상반기 대학원 장학생 선발 공고 <span class="new">NEW</span></a></div>
+                        <div class="mobile-row2">2025-01-02 ~ 2025-02-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2025년 상반기 고교 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2025-01-02 ~ 2025-02-10</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2024년 하반기 대학 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-09-01 ~ 2024-10-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2024년 하반기 대학원 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-09-01 ~ 2024-10-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2024년 하반기 고교 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-09-01 ~ 2024-10-10</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2024년 상반기 대학 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-03-01 ~ 2024-04-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2024년 상반기 대학원 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-03-01 ~ 2024-04-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2024년 상반기 고교 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2024-03-01 ~ 2024-04-10</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                    <div class="mobile-item">
+                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2023년 하반기 대학 장학생 선발 공고</a></div>
+                        <div class="mobile-row2">2023-09-01 ~ 2023-10-15</div>
+                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    </div>
+                </div>
                 <div class="board-pagination">
                     <a href="#" class="arrow">‹</a>
                     <a href="#" class="active">1</a>
@@ -372,7 +440,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="footer-info">서울특별시 강남구 테헤란로 123<br>문의메일 : scholarship@hyunsong.net</div>
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208|TEL : 02-2612-7150, 7140</div>
                 <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
             </div>
             <div class="footer-copyright">
