@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 상세 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root { --primary: #1B4D3E; --lime: #7CB518; --green-light: #EDF6E8; --black: #222222; --gray-dark: #333333; --gray: #666666; --gray-light: #999999; --gray-pale: #CCCCCC; --gray-border: #E5E5E5; --bg: #F5F5F5; --white: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 40px; }
+        .main-nav a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; }
+        .main-nav a:hover, .main-nav a.active { color: var(--primary); }
+        .main-nav a.active::after { content: ''; position: absolute; top: -4px; right: -6px; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 16px 0; font-size: 18px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); }
+        .mobile-nav a.active { color: var(--primary); }
+        .mobile-nav-utils { display: flex; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-border); }
+        .mobile-nav-utils a { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 15px; color: var(--gray); border-bottom: none; }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; }
+        .breadcrumb-section { max-width: 1200px; margin: 0 auto; padding: 40px 40px 20px; }
+        .breadcrumb { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 500; color: var(--gray); }
+        .breadcrumb a { color: var(--primary); text-decoration: none; display: flex; align-items: center; }
+        .breadcrumb span { color: var(--gray-pale); }
+
+        /* 게시판 상세 스타일 */
+        .detail-section { max-width: 900px; margin: 0 auto; padding: 0 40px 100px; }
+
+        .detail-header { border-bottom: 2px solid var(--primary); padding-bottom: 24px; margin-bottom: 40px; }
+        .detail-category { display: inline-block; padding: 6px 14px; background: var(--green-light); color: var(--primary); font-size: 13px; font-weight: 600; border-radius: 20px; margin-bottom: 16px; }
+        .detail-title { font-size: 28px; font-weight: 700; color: var(--black); line-height: 1.4; margin-bottom: 20px; }
+        .detail-meta { display: flex; gap: 24px; font-size: 14px; color: var(--gray); }
+        .detail-meta-item { display: flex; align-items: center; gap: 6px; }
+        .detail-meta-item svg { width: 16px; height: 16px; color: var(--gray-light); }
+
+        .detail-content { padding: 40px 0; border-bottom: 1px solid var(--gray-border); min-height: 300px; }
+        .detail-content p { font-size: 16px; line-height: 1.9; color: var(--gray-dark); margin-bottom: 20px; }
+        .detail-content h3 { font-size: 20px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; }
+        .detail-content ul, .detail-content ol { margin: 16px 0 24px 24px; }
+        .detail-content li { font-size: 16px; line-height: 1.8; color: var(--gray-dark); margin-bottom: 8px; }
+        .detail-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 24px 0; }
+        .detail-content .highlight-box { background: var(--green-light); border-left: 4px solid var(--lime); padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 24px 0; }
+        .detail-content .highlight-box p { margin-bottom: 0; color: var(--primary); }
+
+        /* 첨부파일 */
+        .detail-attachments { padding: 24px 0; border-bottom: 1px solid var(--gray-border); }
+        .attachments-title { font-size: 14px; font-weight: 600; color: var(--gray); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .attachments-title svg { width: 18px; height: 18px; }
+        .attachment-list { display: flex; flex-direction: column; gap: 8px; }
+        .attachment-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg); border-radius: 8px; transition: background 0.2s; }
+        .attachment-item:hover { background: var(--green-light); }
+        .attachment-info { display: flex; align-items: center; gap: 12px; }
+        .attachment-icon { width: 36px; height: 36px; background: var(--white); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .attachment-icon svg { width: 20px; height: 20px; color: var(--primary); }
+        .attachment-name { font-size: 14px; color: var(--black); font-weight: 500; }
+        .attachment-size { font-size: 12px; color: var(--gray-light); }
+        .attachment-download { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); font-weight: 600; text-decoration: none; padding: 8px 12px; border-radius: 6px; transition: background 0.2s; }
+        .attachment-download:hover { background: rgba(124, 181, 24, 0.1); }
+        .attachment-download svg { width: 16px; height: 16px; }
+
+        /* 이전글/다음글 네비게이션 */
+        .detail-nav { padding: 24px 0; }
+        .nav-item { display: flex; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--gray-border); }
+        .nav-item:first-child { border-top: 1px solid var(--gray-border); }
+        .nav-label { width: 100px; font-size: 14px; font-weight: 600; color: var(--gray); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .nav-label svg { width: 16px; height: 16px; }
+        .nav-link { flex: 1; font-size: 15px; color: var(--black); text-decoration: none; transition: color 0.2s; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link.disabled { color: var(--gray-light); pointer-events: none; }
+
+        /* 버튼 영역 */
+        .detail-buttons { display: flex; justify-content: center; gap: 12px; padding-top: 40px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 32px; font-size: 15px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover { background: #153d31; }
+        .btn-outline { background: var(--white); color: var(--gray-dark); border: 1px solid var(--gray-border); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn svg { width: 18px; height: 18px; }
+
+        /* Footer */
+        .footer { background: var(--gray-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .family-site { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 10px 16px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav, .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .breadcrumb-section, .detail-section { padding-left: 20px; padding-right: 20px; }
+            .detail-title { font-size: 22px; }
+            .detail-meta { flex-wrap: wrap; gap: 12px; }
+            .detail-content { padding: 30px 0; }
+            .nav-label { width: 80px; font-size: 13px; }
+            .detail-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><img src="https://github.com/sykim1017/hyunsong/blob/main/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202026-01-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%202.03.14.png?raw=true" alt="현송교육문화재단" class="logo-img"></a>
+            <nav class="main-nav">
+                <a href="about.html">재단소개</a>
+                <a href="programs.html">사업소개</a>
+                <a href="scholarship.html">장학생 선발</a>
+                <a href="news.html" class="active">재단소식</a>
+                <a href="resources.html">자료실</a>
+                <a href="community.html">커뮤니티</a>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html">장학생 선발</a>
+        <a href="news.html" class="active">재단소식</a>
+        <a href="resources.html">자료실</a>
+        <a href="community.html">커뮤니티</a>
+        <div class="mobile-nav-utils">
+            <a href="login.html">로그인</a>
+            <a href="#">ENG</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="breadcrumb-section">
+            <div class="breadcrumb">
+                <a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" /><path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" /></svg></a>
+                <span>|</span>
+                <a href="news.html" style="text-decoration: none; color: var(--gray);">재단소식</a>
+                <span>|</span>
+                공지사항
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <!-- 상세 헤더 -->
+            <div class="detail-header">
+                <span class="detail-category">공지</span>
+                <h1 class="detail-title">2025년 상반기 장학생 선발 일정 안내</h1>
+                <div class="detail-meta">
+                    <div class="detail-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+                        2025.01.02
+                    </div>
+                    <div class="detail-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+                        조회 1,234
+                    </div>
+                    <div class="detail-meta-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+                        관리자
+                    </div>
+                </div>
+            </div>
+
+            <!-- 본문 내용 -->
+            <div class="detail-content">
+                <p>안녕하세요. 현송교육문화재단입니다.</p>
+                <p>2025년 상반기 장학생 선발 일정을 다음과 같이 안내드립니다. 장학금 지원을 희망하시는 학생 여러분의 많은 관심과 지원 바랍니다.</p>
+
+                <h3>1. 지원 대상</h3>
+                <ul>
+                    <li>대학교 학부 재학생 (2025년 2학년 진급 예정자)</li>
+                    <li>외국인 대학원생 (2025년 신입생)</li>
+                    <li>석박사 통합과정 학생 (2025년 신입생)</li>
+                    <li>과학고, 공업고 재학생 (2025년 신입생)</li>
+                </ul>
+
+                <h3>2. 선발 일정</h3>
+                <div class="highlight-box">
+                    <p><strong>접수 기간:</strong> 2025년 1월 15일(수) ~ 2월 28일(금)</p>
+                    <p><strong>서류 심사:</strong> 2025년 3월 1일(토) ~ 3월 15일(토)</p>
+                    <p><strong>결과 발표:</strong> 2025년 3월 20일(목) 개별 통보</p>
+                </div>
+
+                <h3>3. 제출 서류</h3>
+                <ol>
+                    <li>장학금 신청서 1부 (소정 양식)</li>
+                    <li>재학증명서 1부</li>
+                    <li>성적증명서 1부</li>
+                    <li>가족관계증명서 1부</li>
+                    <li>소득금액증명원 1부</li>
+                    <li>자기소개서 1부 (소정 양식)</li>
+                </ol>
+
+                <h3>4. 유의사항</h3>
+                <p>모든 서류는 각 학교를 통해 추천서와 함께 제출되어야 합니다. 개인 접수는 받지 않으니 반드시 소속 학교의 담당 부서를 통해 지원해 주시기 바랍니다.</p>
+                <p>문의사항은 재단 사무국(scholarship@hyunsong.net)으로 연락 바랍니다.</p>
+                <p>감사합니다.</p>
+            </div>
+
+            <!-- 첨부파일 -->
+            <div class="detail-attachments">
+                <div class="attachments-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" /></svg>
+                    첨부파일 (2)
+                </div>
+                <div class="attachment-list">
+                    <div class="attachment-item">
+                        <div class="attachment-info">
+                            <div class="attachment-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+                            </div>
+                            <div>
+                                <div class="attachment-name">2025년_상반기_장학금_신청서.hwp</div>
+                                <div class="attachment-size">125 KB</div>
+                            </div>
+                        </div>
+                        <a href="#" class="attachment-download">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            다운로드
+                        </a>
+                    </div>
+                    <div class="attachment-item">
+                        <div class="attachment-info">
+                            <div class="attachment-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
+                            </div>
+                            <div>
+                                <div class="attachment-name">자기소개서_양식.docx</div>
+                                <div class="attachment-size">45 KB</div>
+                            </div>
+                        </div>
+                        <a href="#" class="attachment-download">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이전글/다음글 -->
+            <div class="detail-nav">
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" /></svg>
+                        이전글
+                    </span>
+                    <a href="#" class="nav-link">2024년 하반기 장학생 선발 결과 발표</a>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                        다음글
+                    </span>
+                    <span class="nav-link disabled">다음글이 없습니다.</span>
+                </div>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="detail-buttons">
+                <a href="news.html" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+                    목록으로
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="#">소개</a><a href="#">연혁</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="#">장학사업</a><a href="#">학술연구지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="#">선발 공지</a><a href="#">신청서류</a></div>
+                    <div class="footer-nav-group"><h4>재단소식</h4><a href="#">공지사항</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울특별시 강남구 테헤란로 123<br>문의메일 : scholarship@hyunsong.net</div>
+                <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+                <button class="family-site">패밀리사이트 →</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    </script>
+</body>
+</html>

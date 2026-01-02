@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root { --primary: #1B4D3E; --lime: #7CB518; --green-light: #EDF6E8; --black: #222222; --gray-dark: #333333; --gray: #666666; --gray-light: #999999; --gray-pale: #CCCCCC; --gray-border: #E5E5E5; --bg: #F5F5F5; --white: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 40px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 16px 0; font-size: 18px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); }
+        .mobile-nav a.active { color: var(--primary); }
+        .mobile-nav-utils { display: flex; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-border); }
+        .mobile-nav-utils a { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 15px; color: var(--gray); border-bottom: none; }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; }
+        .breadcrumb-section { max-width: 1200px; margin: 0 auto; padding: 40px 40px 20px; }
+        .breadcrumb { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 500; color: var(--gray); }
+        .breadcrumb a { color: var(--primary); text-decoration: none; display: flex; align-items: center; }
+        .breadcrumb span { color: var(--gray-pale); }
+        .page-title-section { max-width: 1200px; margin: 0 auto; padding: 24px 40px 24px; }
+        .page-title { font-size: 36px; font-weight: 700; color: var(--primary); text-align: center; }
+        .tab-section { position: sticky; top: 70px; z-index: 100; background: var(--white); padding: 14px 0; }
+        .tab-section-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        .tab-nav { display: flex; background: #F7FAF4; border-radius: 50px; }
+        .tab-nav a { flex: 1; text-align: center; padding: 16px 40px; text-decoration: none; font-size: 16px; font-weight: 500; color: var(--gray-light); border-radius: 50px; border: 2px solid transparent; transition: all 0.3s; white-space: nowrap; }
+        .tab-nav a:hover { color: var(--primary); }
+        .tab-nav a.active { background: var(--white); color: var(--lime); border-color: var(--lime); }
+        .content-section { max-width: 1200px; margin: 0 auto; padding: 40px 20px 100px; }
+        .section-hidden { display: none; }
+        .page-section { padding: 20px 0; }
+        .page-section-title { font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+        .page-section-desc { font-size: 16px; color: var(--gray-dark); line-height: 1.9; }
+        .footer { background: var(--gray-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .family-site { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 10px 16px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+        @media (max-width: 1024px) { .header-inner { padding: 0 20px; } .main-nav, .header-utils { display: none; } .hamburger { display: flex; } .mobile-nav { display: block; } .footer-nav { display: none; } }
+        @media (max-width: 768px) { .breadcrumb-section, .content-section { padding-left: 20px; padding-right: 20px; } .tab-section-inner { padding: 0; } .tab-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-radius: 0; background: transparent; gap: 8px; padding: 0 20px; } .tab-nav::-webkit-scrollbar { display: none; } .tab-nav a { flex: 0 0 auto; padding: 12px 20px; font-size: 14px; background: #F7FAF4; } .tab-nav a.active { background: var(--white); } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><img src="https://github.com/sykim1017/hyunsong/blob/main/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202026-01-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%202.03.14.png?raw=true" alt="현송교육문화재단" class="logo-img"></a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                    <div class="sub-menu">
+                        <a href="programs.html#scholarship">장학사업</a>
+                        <a href="programs.html#research">학술연구지원사업</a>
+                        <a href="programs.html#youth">청소년육성지원사업</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html">장학생 선발</a>
+                    <div class="sub-menu">
+                        <a href="scholarship.html#notice">선발 공지</a>
+                        <a href="scholarship.html#documents">신청 서류</a>
+                        <a href="scholarship.html#faq">자주 묻는 질문</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html">재단소식</a>
+                    <div class="sub-menu">
+                        <a href="news.html#notice">공지사항</a>
+                        <a href="news.html#news">재단 뉴스</a>
+                        <a href="news.html#disclosure">공익법인공시</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                    <div class="sub-menu">
+                        <a href="resources.html#forms">서식 자료</a>
+                        <a href="resources.html#reports">연차 보고서</a>
+                        <a href="resources.html#media">홍보 자료</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="community.html" class="active">커뮤니티</a>
+                    <div class="sub-menu">
+                        <a href="community.html#qna">질문과 답변</a>
+                        <a href="community.html#alumni">장학생 후기</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html">장학생 선발</a>
+        <a href="news.html">재단소식</a>
+        <a href="resources.html">자료실</a>
+        <a href="community.html" class="active">커뮤니티</a>
+        <div class="mobile-nav-utils">
+            <a href="login.html">로그인</a>
+            <a href="#">ENG</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="breadcrumb-section"><div class="breadcrumb"><a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" /><path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" /></svg></a><span>|</span>커뮤니티</div></div>
+        <div class="page-title-section"><h1 class="page-title">커뮤니티</h1></div>
+        <div class="tab-section"><div class="tab-section-inner"><nav class="tab-nav"><a href="#qna" class="active">문의하기</a><a href="#contact">연락처</a></nav></div></div>
+        <div class="content-section">
+            <section id="qna" class="page-section"><h2 class="page-section-title">문의하기</h2><p class="page-section-desc">문의하기 내용이 여기에 들어갑니다.</p></section>
+            <section id="contact" class="page-section section-hidden"><h2 class="page-section-title">연락처</h2><p class="page-section-desc">연락처 내용이 여기에 들어갑니다.</p></section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top"><div class="footer-logo">현송교육문화재단</div><div class="footer-nav"><div class="footer-nav-group"><h4>재단소개</h4><a href="about.html#intro">재단 소개</a><a href="about.html#history">연혁</a><a href="about.html#organization">조직도</a><a href="about.html#location">오시는 길</a></div><div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a><a href="programs.html#youth">청소년육성지원사업</a></div><div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a><a href="scholarship.html#faq">자주 묻는 질문</a></div><div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#news">재단 뉴스</a><a href="news.html#disclosure">공익법인공시</a></div></div></div>
+            <div class="footer-bottom"><div class="footer-info">서울특별시 강남구 테헤란로 123<br>문의메일 : scholarship@hyunsong.net</div><div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div></div>
+            <div class="footer-copyright"><p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p><button class="family-site">패밀리사이트 →</button></div>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.tab-nav a').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); document.querySelectorAll('.tab-nav a').forEach(a => a.classList.remove('active')); this.classList.add('active'); const targetId = this.getAttribute('href').substring(1); document.querySelectorAll('.content-section > section').forEach(section => section.classList.add('section-hidden')); document.getElementById(targetId)?.classList.remove('section-hidden'); }); });
+        const hamburger = document.getElementById('hamburger'); const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() { this.classList.toggle('active'); mobileNav.classList.toggle('active'); document.body.classList.toggle('menu-open'); });
+        mobileNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', function() { hamburger.classList.remove('active'); mobileNav.classList.remove('active'); document.body.classList.remove('menu-open'); }); });
+    </script>
+</body>
+</html>
