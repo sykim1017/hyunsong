@@ -70,41 +70,23 @@
         .content-section { max-width: 1200px; margin: 0 auto; padding: 40px 20px 100px; }
         .section-hidden { display: none; }
         .page-section { padding: 20px 0; }
+        .board-section { padding: 20px 0; }
         .page-section-title { font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
         .page-section-desc { font-size: 16px; color: var(--gray-dark); line-height: 1.9; }
         .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .board-total { font-size: 14px; color: var(--gray); }
         .board-total strong { color: var(--primary); font-weight: 700; }
-        .board-search { display: flex; gap: 8px; align-items: center; }
-        .board-search select { padding: 10px 14px; border: 1px solid var(--gray-border); border-radius: 6px; font-size: 14px; color: var(--gray-dark); background: var(--white); cursor: pointer; }
-        .board-search input { padding: 10px 14px; border: 1px solid var(--gray-border); border-radius: 6px; font-size: 14px; width: 200px; }
-        .board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
-        .board-search button:hover { background: #153D31; }
-        .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--primary); }
-        .board-table thead th { padding: 16px 12px; background: #F9F9F9; font-size: 14px; font-weight: 600; color: var(--gray-dark); text-align: center; border-bottom: 1px solid var(--gray-border); }
-        .board-table tbody tr { border-bottom: 1px solid var(--gray-border); transition: background 0.2s; }
-        .board-table tbody tr:hover { background: #FAFAFA; }
-        .board-table tbody td { padding: 18px 12px; font-size: 14px; color: var(--gray-dark); text-align: center; vertical-align: middle; }
-        .board-table .col-no { width: 60px; }
-        .board-table .col-category { width: 100px; }
-        .board-table .col-title { text-align: left; }
-        .board-table .col-date { width: 120px; }
-        .board-table .col-apply { width: 120px; }
-        .category-badge { display: inline-block; padding: 6px 16px; font-size: 13px; font-weight: 600; color: var(--primary); background: var(--green-light); border-radius: 20px; }
-        .date-cell { font-size: 13px; line-height: 1.6; }
-        .date-cell .date-start { color: var(--gray-dark); }
-        .date-cell .date-end { color: var(--gray); }
-        .board-title-link { color: var(--black); text-decoration: none; font-weight: 500; }
-        .board-title-link:hover { color: var(--primary); text-decoration: underline; }
-        .board-title-link .new { display: inline-block; margin-left: 8px; padding: 2px 6px; background: var(--lime); color: var(--white); font-size: 10px; font-weight: 700; border-radius: 4px; }
-        .apply-btn { display: inline-block; padding: 8px 16px; background: var(--lime); color: var(--white); font-size: 13px; font-weight: 600; border-radius: 20px; text-decoration: none; transition: background 0.2s; }
-        .apply-btn:hover { background: #6AA015; }
+        .board-search { display: flex; gap: 8px; }
+        .board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        .board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
+        .board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
         .board-list { border-top: 2px solid var(--primary); }
-        .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; text-decoration: none; transition: background 0.2s; }
+        .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
         .board-item:hover { background: #FAFAFA; }
         .board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
-        .board-category { padding: 4px 12px; background: var(--green-light); color: var(--primary); font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; }
-        .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; }
+        .board-category { width: 100px; padding: 4px 12px; background: var(--green-light); color: var(--primary); font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; }
+        .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .board-title:hover { color: var(--primary); }
         .board-title .new { display: inline-block; margin-left: 8px; padding: 2px 6px; background: var(--lime); color: var(--white); font-size: 10px; font-weight: 700; border-radius: 4px; }
         .board-date { width: 100px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
         .board-views { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
@@ -137,7 +119,6 @@
             .mobile-nav { display: block; }
             .footer-nav { display: none; }
         }
-        .board-list-mobile { display: none; }
         @media (max-width: 768px) {
             .breadcrumb-section { padding: 16px 20px 8px; }
             .page-title-section { padding: 8px 20px 8px; }
@@ -149,18 +130,17 @@
             .tab-nav a { flex: 0 0 auto; padding: 10px 16px; font-size: 13px; background: #F7FAF4; }
             .tab-nav a.active { background: var(--white); }
             .content-section { padding: 20px 20px 60px; }
-            /* 게시판 모바일 3줄 리스트 */
-            .board-table { display: none; }
-            .board-list-mobile { display: block; border-top: 2px solid var(--primary); }
-            .board-list-mobile .mobile-item { display: block; padding: 16px 0; border-bottom: 1px solid var(--gray-border); }
-            .mobile-item .mobile-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-            .mobile-item .mobile-category { padding: 3px 10px; background: var(--green-light); color: var(--primary); font-size: 11px; font-weight: 600; border-radius: 12px; }
-            .mobile-item .mobile-title { flex: 1; font-size: 15px; color: var(--black); font-weight: 500; text-decoration: none; }
-            .mobile-item .mobile-title:hover { color: var(--primary); }
-            .mobile-item .mobile-title .new { display: inline-block; margin-left: 6px; padding: 2px 5px; background: var(--lime); color: var(--white); font-size: 9px; font-weight: 700; border-radius: 3px; }
-            .mobile-item .mobile-row2 { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
-            .mobile-item .mobile-row3 { }
-            .mobile-item .mobile-apply { display: inline-block; padding: 6px 14px; background: var(--lime); color: var(--white); font-size: 12px; font-weight: 600; border-radius: 16px; text-decoration: none; }
+            .board-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .board-search { flex-wrap: nowrap; gap: 6px; width: 100%; }
+            .board-search select { padding: 8px 10px; font-size: 13px; flex-shrink: 0; }
+            .board-search input { flex: 1; min-width: 0; padding: 8px 10px; font-size: 13px; }
+            .board-search button { padding: 8px 14px; font-size: 13px; flex-shrink: 0; }
+            .board-item { flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+            .board-num { display: none; }
+            .board-category { width: auto; order: 1; }
+            .board-title { width: calc(100% - 80px); order: 2; font-size: 14px; }
+            .board-date { width: auto; order: 3; font-size: 12px; }
+            .board-views { display: none; }
         }
     </style>
 </head>
@@ -213,7 +193,7 @@
                     </div>
                 </div>
                 <div class="nav-item">
-                    <a href="community.html">커뮤니티</a>
+                    <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
                     <div class="sub-menu">
                         <a href="community.html#qna">질문과 답변</a>
                         <a href="community.html#alumni">장학생 후기</a>
@@ -233,7 +213,7 @@
         <a href="scholarship.html" class="active">장학생 선발</a>
         <a href="news.html">재단소식</a>
         <a href="resources.html">자료실</a>
-        <a href="community.html">커뮤니티</a>
+        <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
         <div class="mobile-nav-utils">
             <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>로그인</a>
             <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg>ENG</a>
@@ -260,154 +240,89 @@
             </div>
         </div>
         <div class="content-section">
-            <section id="notice" class="page-section">
+            <section id="notice" class="board-section">
                 <div class="board-header">
                     <div class="board-total">총 <strong>24</strong>건</div>
                     <div class="board-search">
                         <select>
-                            <option value="">구분</option>
-                            <option value="대학">대학</option>
-                            <option value="대학원">대학원</option>
-                            <option value="고교">고교</option>
+                            <option>구분</option>
+                            <option>제목</option>
+                            <option>제목+내용</option>
                         </select>
                         <input type="text" placeholder="검색어를 입력하세요">
-                        <button type="button">검색</button>
+                        <button>검색</button>
                     </div>
                 </div>
-                <table class="board-table">
-                    <thead>
-                        <tr>
-                            <th class="col-no">NO.</th>
-                            <th class="col-category">분류</th>
-                            <th class="col-title">제목</th>
-                            <th class="col-date">일정</th>
-                            <th class="col-apply">신청하기</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>24</td>
-                            <td><span class="category-badge">대학</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2025년 상반기 대학 장학생 선발 공고 <span class="new">NEW</span></a></td>
-                            <td class="date-cell"><div class="date-start">2025-01-02</div><div class="date-end">2025-02-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>23</td>
-                            <td><span class="category-badge">대학원</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2025년 상반기 대학원 장학생 선발 공고 <span class="new">NEW</span></a></td>
-                            <td class="date-cell"><div class="date-start">2025-01-02</div><div class="date-end">2025-02-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>22</td>
-                            <td><span class="category-badge">고교</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2025년 상반기 고교 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2025-01-02</div><div class="date-end">2025-02-10</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>21</td>
-                            <td><span class="category-badge">대학</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 하반기 대학 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-09-01</div><div class="date-end">2024-10-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>20</td>
-                            <td><span class="category-badge">대학원</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 하반기 대학원 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-09-01</div><div class="date-end">2024-10-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>19</td>
-                            <td><span class="category-badge">고교</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 하반기 고교 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-09-01</div><div class="date-end">2024-10-10</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>18</td>
-                            <td><span class="category-badge">대학</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 상반기 대학 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-03-01</div><div class="date-end">2024-04-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>17</td>
-                            <td><span class="category-badge">대학원</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 상반기 대학원 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-03-01</div><div class="date-end">2024-04-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>16</td>
-                            <td><span class="category-badge">고교</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2024년 상반기 고교 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2024-03-01</div><div class="date-end">2024-04-10</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                        <tr>
-                            <td>15</td>
-                            <td><span class="category-badge">대학</span></td>
-                            <td class="col-title"><a href="login.html" class="board-title-link">2023년 하반기 대학 장학생 선발 공고</a></td>
-                            <td class="date-cell"><div class="date-start">2023-09-01</div><div class="date-end">2023-10-15</div></td>
-                            <td><a href="login.html" class="apply-btn">신청하기</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- 모바일 리스트 -->
-                <div class="board-list-mobile">
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2025년 상반기 대학 장학생 선발 공고 <span class="new">NEW</span></a></div>
-                        <div class="mobile-row2">2025-01-02 ~ 2025-02-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                <div class="board-list">
+                    <div class="board-item">
+                        <span class="board-num">24</span>
+                        <span class="board-category">대학</span>
+                        <a href="login.html" class="board-title">2025년 상반기 대학 장학생 선발 공고 <span class="new">NEW</span></a>
+                        <span class="board-date">2025.01.02</span>
+                        <span class="board-views">152</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2025년 상반기 대학원 장학생 선발 공고 <span class="new">NEW</span></a></div>
-                        <div class="mobile-row2">2025-01-02 ~ 2025-02-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">23</span>
+                        <span class="board-category">대학원</span>
+                        <a href="login.html" class="board-title">2025년 상반기 대학원 장학생 선발 공고 <span class="new">NEW</span></a>
+                        <span class="board-date">2025.01.02</span>
+                        <span class="board-views">98</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2025년 상반기 고교 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2025-01-02 ~ 2025-02-10</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">22</span>
+                        <span class="board-category">고교</span>
+                        <a href="login.html" class="board-title">2025년 상반기 고교 장학생 선발 공고</a>
+                        <span class="board-date">2025.01.02</span>
+                        <span class="board-views">76</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2024년 하반기 대학 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-09-01 ~ 2024-10-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">21</span>
+                        <span class="board-category">대학</span>
+                        <a href="login.html" class="board-title">2024년 하반기 대학 장학생 선발 공고</a>
+                        <span class="board-date">2024.09.01</span>
+                        <span class="board-views">312</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2024년 하반기 대학원 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-09-01 ~ 2024-10-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">20</span>
+                        <span class="board-category">대학원</span>
+                        <a href="login.html" class="board-title">2024년 하반기 대학원 장학생 선발 공고</a>
+                        <span class="board-date">2024.09.01</span>
+                        <span class="board-views">245</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2024년 하반기 고교 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-09-01 ~ 2024-10-10</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">19</span>
+                        <span class="board-category">고교</span>
+                        <a href="login.html" class="board-title">2024년 하반기 고교 장학생 선발 공고</a>
+                        <span class="board-date">2024.09.01</span>
+                        <span class="board-views">198</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2024년 상반기 대학 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-03-01 ~ 2024-04-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">18</span>
+                        <span class="board-category">대학</span>
+                        <a href="login.html" class="board-title">2024년 상반기 대학 장학생 선발 공고</a>
+                        <span class="board-date">2024.03.01</span>
+                        <span class="board-views">456</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학원</span><a href="login.html" class="mobile-title">2024년 상반기 대학원 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-03-01 ~ 2024-04-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">17</span>
+                        <span class="board-category">대학원</span>
+                        <a href="login.html" class="board-title">2024년 상반기 대학원 장학생 선발 공고</a>
+                        <span class="board-date">2024.03.01</span>
+                        <span class="board-views">321</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">고교</span><a href="login.html" class="mobile-title">2024년 상반기 고교 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2024-03-01 ~ 2024-04-10</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">16</span>
+                        <span class="board-category">고교</span>
+                        <a href="login.html" class="board-title">2024년 상반기 고교 장학생 선발 공고</a>
+                        <span class="board-date">2024.03.01</span>
+                        <span class="board-views">267</span>
                     </div>
-                    <div class="mobile-item">
-                        <div class="mobile-row1"><span class="mobile-category">대학</span><a href="login.html" class="mobile-title">2023년 하반기 대학 장학생 선발 공고</a></div>
-                        <div class="mobile-row2">2023-09-01 ~ 2023-10-15</div>
-                        <div class="mobile-row3"><a href="login.html" class="mobile-apply">신청하기</a></div>
+                    <div class="board-item">
+                        <span class="board-num">15</span>
+                        <span class="board-category">대학</span>
+                        <a href="login.html" class="board-title">2023년 하반기 대학 장학생 선발 공고</a>
+                        <span class="board-date">2023.09.01</span>
+                        <span class="board-views">512</span>
                     </div>
                 </div>
                 <div class="board-pagination">
