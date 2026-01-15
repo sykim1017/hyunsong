@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장학생 선발 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01B18B;
+            --lime: rgba(228, 254, 243, 0.8);
+            --green-light: #EDF6E8;
+            --black: #222222;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --gray-pale: #CCCCCC;
+            --gray-border: #E5E5E5;
+            --bg: #F5F5F5;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 50px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: #01B18B; border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 14px 0; font-size: 15px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); transition: color 0.2s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--primary); }
+        .mobile-nav-utils { display: flex; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-border); }
+        .mobile-nav-utils a { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 15px; color: var(--gray); border-bottom: none; }
+        .mobile-nav-utils svg { width: 20px; height: 20px; }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; }
+        /* Breadcrumb */
+        .breadcrumb { padding: 20px 0; background: var(--white); }
+        .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 12px; }
+        .breadcrumb-home { color: var(--primary); display: flex; align-items: center; }
+        .breadcrumb-home:hover { opacity: 0.8; }
+        .breadcrumb-divider { color: var(--gray-border); font-size: 14px; }
+        .breadcrumb-current { font-size: 14px; color: var(--gray-light); }
+        /* Page Header */
+        .page-header { background: var(--white); padding: 20px 40px 20px; text-align: center; }
+        .page-header-inner { max-width: 1200px; margin: 0 auto; }
+        .page-title { font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 40px; }
+        /* Sub Navigation Tabs */
+        .sub-nav-tabs { display: flex; gap: 0; width: 100%; max-width: 1120px; margin: 0 auto; background: #F7FAF4; border-radius: 50px; padding: 4px; }
+        .tab-item { flex: 1; padding: 12px 8px; font-size: 15px; font-weight: 500; color: var(--gray-light); text-decoration: none; border: none; transition: all 0.2s; background: transparent; text-align: center; border-radius: 50px; }
+        .tab-item:hover { color: var(--primary); }
+        .tab-item.active { color: var(--white); background: var(--primary); }
+        .content-section { max-width: 1200px; margin: 0 auto; padding: 20px 40px 100px; }
+        .section-hidden { display: none; }
+        .page-section { padding: 20px 0; }
+        .board-section { padding: 20px 0; }
+        .page-section-title { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+        .page-section-desc { font-size: 15px; color: var(--gray-dark); line-height: 1.9; }
+
+        /* 페이지 인트로 */
+        .page-intro {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .page-intro p {
+            font-size: 16px;
+            color: var(--gray-dark);
+            line-height: 2;
+        }
+
+        /* 섹션 박스 */
+        .section-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+        .section-box-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .section-box p {
+            font-size: 15px;
+            color: var(--gray-dark);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .section-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 안내 리스트 */
+        .notice-list {
+            background: #FAFAFA;
+            border-radius: 12px;
+            padding: 24px 30px;
+            margin: 20px 0;
+        }
+        .notice-list li {
+            font-size: 14px;
+            color: var(--gray-dark);
+            line-height: 2;
+            padding-left: 16px;
+            position: relative;
+        }
+        .notice-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* 선발 절차 스텝 */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 60px;
+            right: 60px;
+            height: 2px;
+            background: var(--gray-border);
+        }
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .step-label {
+            font-size: 13px;
+            color: var(--gray-dark);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* 대상 리스트 */
+        .target-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .target-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--green-light);
+            border-radius: 8px;
+        }
+        .target-icon {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .target-text {
+            font-size: 15px;
+            color: var(--gray-dark);
+        }
+
+        /* 다운로드 리스트 */
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .download-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: var(--bg);
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .download-item:hover {
+            background: var(--green-light);
+        }
+        .download-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .download-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        .download-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+        .download-meta {
+            font-size: 13px;
+            color: var(--gray-light);
+            margin-top: 4px;
+        }
+        .download-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .download-btn:hover {
+            background: #019977;
+        }
+
+        /* FAQ 아코디언 */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            border: 1px solid var(--gray-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .faq-question {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--white);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: #FAFAFA;
+        }
+        .faq-q-label {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .faq-q-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+        .faq-toggle {
+            color: var(--gray-light);
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            display: none;
+            padding: 0 24px 24px 72px;
+            background: var(--white);
+        }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        .faq-a-text {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* 신청 절차 */
+        .apply-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .apply-step {
+            text-align: center;
+            padding: 24px 16px;
+            background: var(--bg);
+            border-radius: 12px;
+        }
+        .apply-step-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .apply-step-text {
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+
+        /* 하단 안내 */
+        .page-footer-notice {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 30px 40px;
+            margin-top: 40px;
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+        .page-footer-notice p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.9;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .page-intro { padding: 30px 20px; }
+            .section-box { padding: 30px 20px; }
+            .process-steps { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .process-steps::before { display: none; }
+            .process-step { flex-direction: row; gap: 16px; }
+            .step-number { margin-bottom: 0; }
+            .apply-steps { grid-template-columns: repeat(2, 1fr); }
+            .download-item { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .download-btn { width: 100%; justify-content: center; }
+        }
+        .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .board-total { font-size: 14px; color: var(--gray); }
+        .board-total strong { color: var(--primary); font-weight: 700; }
+        .board-search { display: flex; gap: 8px; }
+        .board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        .board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
+        .board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .board-list { border-top: 2px solid var(--primary); }
+        .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
+        .board-item:hover { background: #FAFAFA; }
+        .board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-category { width: 100px; padding: 4px 12px; background: var(--green-light); color: var(--primary); font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; }
+        .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .board-title:hover { color: var(--primary); }
+        .board-date { width: 100px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-views { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-pagination { display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 40px; }
+        .board-pagination a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray); text-decoration: none; transition: all 0.2s; }
+        .board-pagination a:hover { border-color: var(--primary); color: var(--primary); }
+        .board-pagination a.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+        .board-pagination a.arrow { font-size: 12px; }
+
+        /* 장학생 선발 공지 리스트 스타일 */
+        .notice-board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .notice-board-total { font-size: 14px; color: var(--gray); }
+        .notice-board-total strong { color: var(--primary); font-weight: 700; }
+        .notice-board-search { display: flex; gap: 8px; }
+        .notice-board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        .notice-board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
+        .notice-board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .notice-board-list { border-top: 2px solid var(--primary); padding: 0 14px; }
+        .notice-board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
+        .notice-board-apply { flex-shrink: 0; margin-left: 20px; }
+        .notice-board-item:hover { background: #FAFAFA; }
+        .notice-board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .notice-board-category { padding: 4px 12px; background: var(--green-light); color: var(--primary); font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; min-width: 80px; }
+        .notice-board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .notice-board-title:hover { color: var(--primary); }
+        .notice-board-period { width: 180px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .notice-board-views { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .apply-btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: var(--white); border-radius: 30px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+        .apply-btn:hover { background: #019a79; }
+
+        .footer { background: var(--gray-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; }
+        .footer-nav-group a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .family-site { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 10px 16px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav { display: none; }
+            .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .breadcrumb { padding: 12px 16px; }
+            .breadcrumb-inner { gap: 10px; }
+            .breadcrumb-current { font-size: 13px; }
+            .page-header { padding: 30px 16px 30px; }
+            .page-title { font-size: 26px; margin-bottom: 30px; }
+            .sub-nav-tabs { flex-wrap: wrap; padding: 3px; }
+            .tab-item { flex: 1 1 calc(33.333% - 2px); min-width: calc(33.333% - 2px); padding: 10px 4px; font-size: 12px; }
+            .content-section { padding: 20px 20px 60px; }
+            .board-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .board-search { flex-wrap: nowrap; gap: 6px; width: 100%; }
+            .board-search select { padding: 8px 10px; font-size: 13px; flex-shrink: 0; }
+            .board-search input { flex: 1; min-width: 0; padding: 8px 10px; font-size: 13px; }
+            .board-search button { padding: 8px 14px; font-size: 13px; flex-shrink: 0; }
+            .board-item { flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+            .board-num { display: none; }
+            .board-category { width: auto; order: 1; }
+            .board-title { width: calc(100% - 80px); order: 2; font-size: 14px; }
+            .board-date { width: auto; order: 3; font-size: 12px; }
+            .board-views { display: none; }
+
+            /* 장학생 선발 공지 리스트 반응형 */
+            .notice-board-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .notice-board-search { flex-wrap: nowrap; gap: 6px; width: 100%; }
+            .notice-board-search select { padding: 8px 10px; font-size: 13px; flex-shrink: 0; }
+            .notice-board-search input { flex: 1; min-width: 0; padding: 8px 10px; font-size: 13px; }
+            .notice-board-search button { padding: 8px 14px; font-size: 13px; flex-shrink: 0; }
+            .notice-board-list { padding: 0 10px; }
+            .notice-board-item { flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+            .notice-board-num { display: none; }
+            .notice-board-category { order: 1; min-width: auto; }
+            .notice-board-title { width: 100%; order: 2; font-size: 14px; }
+            .notice-board-period { width: auto; order: 3; font-size: 12px; text-align: left; }
+            .notice-board-views { display: none; }
+            .notice-board-apply { order: 4; margin-left: auto; }
+            .apply-btn { padding: 8px 14px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                    <div class="sub-menu">
+                        <a href="programs.html#scholarship">장학사업</a>
+                        <a href="programs.html#research">학술연구지원사업</a>
+                        <a href="programs.html#youth">청소년육성지원사업</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html" class="active">장학생 선발</a>
+                    <div class="sub-menu">
+                        <a href="scholarship.html#notice">선발 공지</a>
+                        <a href="scholarship.html#documents">신청 서류</a>
+                        <a href="scholarship.html#faq">자주 묻는 질문</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html">재단소식</a>
+                    <div class="sub-menu">
+                        <a href="news.html#notice">공지사항</a>
+                        <a href="news.html#news">재단 뉴스</a>
+                        <a href="news.html#disclosure">공익법인공시</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                    <div class="sub-menu">
+                        <a href="resources.html#photo">포토갤러리</a>
+                        <a href="resources.html#downloads">서식자료실</a>
+                        
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html" class="active">장학생 선발</a>
+        <a href="news.html">재단소식</a>
+        <a href="resources.html">자료실</a>
+        <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
+        <div class="mobile-nav-utils">
+            <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>로그인</a>
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg>ENG</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="breadcrumb">
+            <div class="breadcrumb-inner">
+                <a href="index.html" class="breadcrumb-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                        <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                        <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    </svg>
+                </a>
+                <span class="breadcrumb-divider">|</span>
+                <span class="breadcrumb-current">장학생 선발</span>
+            </div>
+        </div>
+        <div class="page-header">
+            <div class="page-header-inner">
+                <h1 class="page-title">장학생 선발</h1>
+                <div class="sub-nav-tabs">
+                    <a href="#notice" class="tab-item active">선발공지</a>
+                    <a href="#documents" class="tab-item">신청서류</a>
+                    <a href="#faq" class="tab-item">자주 묻는 질문</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-section">
+            <!-- 탭 1: 선발 공지 -->
+            <section id="notice" class="page-section">
+                <!-- 헤더: 총 건수 + 검색 -->
+                <div class="notice-board-header">
+                    <div class="notice-board-total">총 <strong>128</strong>건</div>
+                    <div class="notice-board-search">
+                        <select>
+                            <option>구분</option>
+                            <option>대학</option>
+                            <option>대학원</option>
+                            <option>고교</option>
+                        </select>
+                        <input type="text" placeholder="검색어를 입력하세요">
+                        <button>검색</button>
+                    </div>
+                </div>
+
+                <!-- 리스트 형태 게시판 -->
+                <div class="notice-board-list">
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">128</span>
+                        <span class="notice-board-category">대학</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 장학생 선발 공고</a>
+                        <span class="notice-board-period">2025.01.02~2025.02.15</span>
+                        <span class="notice-board-views">152</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">127</span>
+                        <span class="notice-board-category">대학원</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 대학원 장학생 선발 공고</a>
+                        <span class="notice-board-period">2025.01.02~2025.02.15</span>
+                        <span class="notice-board-views">89</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">126</span>
+                        <span class="notice-board-category">고교</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 고교 장학생 선발 공고</a>
+                        <span class="notice-board-period">2024.12.15~2025.01.15</span>
+                        <span class="notice-board-views">234</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">125</span>
+                        <span class="notice-board-category">대학</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 대학 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.09.01~2024.09.30</span>
+                        <span class="notice-board-views">312</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">124</span>
+                        <span class="notice-board-category">대학원</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 대학원 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.09.01~2024.09.30</span>
+                        <span class="notice-board-views">287</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">123</span>
+                        <span class="notice-board-category">고교</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 고교 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.08.15~2024.09.15</span>
+                        <span class="notice-board-views">198</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">122</span>
+                        <span class="notice-board-category">대학</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 장학금 지급 완료 안내</a>
+                        <span class="notice-board-period">2024.06.01~2024.06.30</span>
+                        <span class="notice-board-views">456</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">121</span>
+                        <span class="notice-board-category">대학</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 대학 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.03.01~2024.03.31</span>
+                        <span class="notice-board-views">523</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">120</span>
+                        <span class="notice-board-category">대학원</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 대학원 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.03.01~2024.03.31</span>
+                        <span class="notice-board-views">412</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                    <div class="notice-board-item">
+                        <span class="notice-board-num">119</span>
+                        <span class="notice-board-category">고교</span>
+                        <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 고교 장학생 선발 공지합니다.</a>
+                        <span class="notice-board-period">2024.02.15~2024.03.15</span>
+                        <span class="notice-board-views">378</span>
+                        <div class="notice-board-apply"><a href="scholarship-apply.html" class="apply-btn">신청하기</a></div>
+                    </div>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="board-pagination">
+                    <a href="#" class="arrow">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#" class="arrow">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </div>
+
+                <!-- 선발 절차 -->
+                <div class="section-box" style="margin-top: 40px;">
+                    <h3 class="section-box-title">선발 절차</h3>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">01</div>
+                            <div class="step-label">선발 공고</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">02</div>
+                            <div class="step-label">추천서 및<br>서류 접수</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">03</div>
+                            <div class="step-label">내부 심사 및<br>검토</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">04</div>
+                            <div class="step-label">장학생 선발 및<br>장학금 지급</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 모집 대상 -->
+                <div class="section-box">
+                    <h3 class="section-box-title">모집 대상</h3>
+                    <div class="target-list">
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">국내 대학교 학부 재학생</span>
+                        </div>
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">국내 대학원 석·박사 과정 재학생</span>
+                        </div>
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">과학고·공업고 등 특수목적 고등학교 재학생</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray-light); margin-top: 12px;">※ 세부 대상은 공지별 상이</p>
+                </div>
+
+                <!-- 지원 자격 -->
+                <div class="section-box">
+                    <h3 class="section-box-title">지원 자격</h3>
+                    <div class="target-list">
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">직전 학기 성적 기준 충족자</span>
+                        </div>
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">학교 또는 기관 추천을 받은 자</span>
+                        </div>
+                        <div class="target-item">
+                            <span class="target-icon"></span>
+                            <span class="target-text">기타 재단이 정한 요건을 충족하는 자</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray-light); margin-top: 12px;">※ 휴학 예정자, 중복 수혜자는 선발에서 제외될 수 있습니다.</p>
+                </div>
+
+                <!-- 유의 사항 -->
+                <div class="section-box">
+                    <h3 class="section-box-title">유의 사항</h3>
+                    <ul class="notice-list">
+                        <li>제출 서류가 허위로 확인될 경우 선발이 취소될 수 있습니다.</li>
+                        <li>심사 결과는 개별 안내되며, 심사 내용은 공개하지 않습니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 탭 2: 신청 서류 -->
+            <section id="documents" class="page-section section-hidden">
+                <div class="section-box">
+                    <h3 class="section-box-title">신청 서류 안내</h3>
+                    <p>장학금 신청을 위해서는 재단에서 지정한 신청 서류를 반드시 제출해야 합니다.<br>서류 양식은 아래 목록에서 다운로드하실 수 있습니다.</p>
+
+                    <ul class="notice-list">
+                        <li>모든 서류는 지정된 양식을 사용해야 합니다.</li>
+                        <li>제출 서류 미비 시 심사 대상에서 제외될 수 있습니다.</li>
+                        <li>파일은 PDF 또는 지정된 형식으로 제출해주시기 바랍니다.</li>
+                    </ul>
+
+                    <!-- 다운로드 리스트 -->
+                    <div class="download-list">
+                        <div class="download-item">
+                            <div class="download-info">
+                                <div class="download-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="download-name">장학금 신청서 양식</div>
+                                    <div class="download-meta">HWP · 125KB · 2025.01.02</div>
+                                </div>
+                            </div>
+                            <a href="#" class="download-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                                다운로드
+                            </a>
+                        </div>
+                        <div class="download-item">
+                            <div class="download-info">
+                                <div class="download-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="download-name">추천서 양식</div>
+                                    <div class="download-meta">HWP · 98KB · 2025.01.02</div>
+                                </div>
+                            </div>
+                            <a href="#" class="download-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                                다운로드
+                            </a>
+                        </div>
+                        <div class="download-item">
+                            <div class="download-info">
+                                <div class="download-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="download-name">개인정보 수집 및 이용 동의서</div>
+                                    <div class="download-meta">PDF · 85KB · 2025.01.02</div>
+                                </div>
+                            </div>
+                            <a href="#" class="download-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                                다운로드
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 신청 절차 안내 -->
+                <div class="section-box">
+                    <h3 class="section-box-title">장학금 신청 절차</h3>
+                    <div class="apply-steps">
+                        <div class="apply-step">
+                            <div class="apply-step-num">1</div>
+                            <div class="apply-step-text">로그인</div>
+                        </div>
+                        <div class="apply-step">
+                            <div class="apply-step-num">2</div>
+                            <div class="apply-step-text">장학금 신청서 작성</div>
+                        </div>
+                        <div class="apply-step">
+                            <div class="apply-step-num">3</div>
+                            <div class="apply-step-text">필수 서류 업로드</div>
+                        </div>
+                        <div class="apply-step">
+                            <div class="apply-step-num">4</div>
+                            <div class="apply-step-text">접수 완료</div>
+                        </div>
+                    </div>
+
+                    <ul class="notice-list">
+                        <li>서류 제출 후에는 수정이 제한될 수 있습니다.</li>
+                        <li>접수 마감 이후에는 추가 제출이 불가합니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 탭 3: 자주 묻는 질문 -->
+            <section id="faq" class="page-section section-hidden">
+                <div class="section-box">
+                    <h3 class="section-box-title">자주 묻는 질문 안내</h3>
+                    <p>장학생 선발과 관련하여 자주 문의되는 질문을 정리하였습니다.<br>문의 전 아래 내용을 먼저 확인해주시기 바랍니다.</p>
+                </div>
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-q-label">Q</span>
+                            <span class="faq-q-text">장학금은 매년 신청해야 하나요?</span>
+                            <svg class="faq-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="faq-a-text">네. 장학금은 연도별로 운영되며, 매년 별도로 신청하셔야 합니다.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-q-label">Q</span>
+                            <span class="faq-q-text">중복으로 장학금을 받을 수 있나요?</span>
+                            <svg class="faq-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="faq-a-text">재단 기준에 따라 중복 수혜가 제한될 수 있으며, 세부 기준은 각 선발 공지에서 확인하실 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-q-label">Q</span>
+                            <span class="faq-q-text">심사 기준은 공개되나요?</span>
+                            <svg class="faq-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="faq-a-text">심사는 재단 내부 기준에 따라 진행되며, 세부 심사 기준 및 결과는 공개하지 않습니다.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-q-label">Q</span>
+                            <span class="faq-q-text">신청 결과는 언제 알 수 있나요?</span>
+                            <svg class="faq-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="faq-a-text">심사 완료 후 개별 안내를 통해 결과를 전달드립니다.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-q-label">Q</span>
+                            <span class="faq-q-text">서류 제출 후 수정이 가능한가요?</span>
+                            <svg class="faq-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="faq-a-text">접수 기간 내에 한해 수정이 가능하며, 접수 마감 이후에는 수정이 불가합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 하단 안내 -->
+            <div class="page-footer-notice">
+                <p>장학생 선발과 관련된 모든 공지는<br>현송교육문화재단 홈페이지를 통해 안내됩니다.<br>기타 문의 사항은 공지사항을 참고해주시기 바랍니다.</p>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html#intro">재단 소개</a><a href="about.html#history">연혁</a><a href="about.html#organization">조직도</a><a href="about.html#location">오시는 길</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a><a href="programs.html#youth">청소년육성지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a><a href="scholarship.html#faq">자주 묻는 질문</a></div>
+                    <div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#news">재단 뉴스</a><a href="news.html#disclosure">공익법인공시</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208|TEL : 02-2612-7150, 7140</div>
+                <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+                <button class="family-site">패밀리사이트 →</button>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Tab navigation
+        document.querySelectorAll('.sub-nav-tabs .tab-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.sub-nav-tabs .tab-item').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                const targetId = this.getAttribute('href').substring(1);
+                document.querySelectorAll('.content-section > section').forEach(section => section.classList.add('section-hidden'));
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) targetSection.classList.remove('section-hidden');
+            });
+        });
+
+        // FAQ accordion toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+    </script>
+</body>
+</html>

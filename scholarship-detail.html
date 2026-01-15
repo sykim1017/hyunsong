@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장학생 선발 공지 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01B18B;
+            --primary-light: rgba(148, 255, 186, 0.21);
+            --primary-soft: rgba(1, 177, 139, 0.08);
+            --lime: rgba(228, 254, 243, 0.8);
+            --green-light: #E8F5F1;
+            --black: #222222;
+            --text-dark: #3E3A39;
+            --text-gray: #8E93A6;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --gray-pale: #CCCCCC;
+            --border: #C6C9D7;
+            --gray-border: #E5E5E5;
+            --bg-light: #F2F3F8;
+            --bg-card: #FBFCFF;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 50px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: #01B18B; border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 14px 0; font-size: 15px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); transition: color 0.2s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--primary); }
+        body.menu-open { overflow: hidden; }
+
+        .main-content { padding-top: 70px; }
+
+        /* Breadcrumb */
+        .breadcrumb { padding: 20px 0; background: var(--white); }
+        .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 12px; }
+        .breadcrumb-home { color: var(--primary); display: flex; align-items: center; }
+        .breadcrumb-divider { color: var(--gray-border); font-size: 14px; }
+        .breadcrumb-current { font-size: 14px; color: var(--gray-light); }
+
+        /* Detail Hero */
+        .detail-hero {
+            background: linear-gradient(180deg, var(--green-light) 0%, var(--white) 100%);
+            padding: 60px 40px 50px;
+            text-align: center;
+        }
+        .detail-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .detail-category {
+            display: inline-block;
+            padding: 8px 24px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .detail-desc {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Step Process */
+        .step-process {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px 50px;
+        }
+        .step-process-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+        .step-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        .step-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .step-dot {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+        .step-dot svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-gray);
+        }
+        .step-item.active .step-dot {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(1, 177, 139, 0.25);
+        }
+        .step-item.active .step-dot svg {
+            color: var(--white);
+        }
+        .step-label {
+            font-size: 14px;
+            color: var(--gray-dark);
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        .step-arrow {
+            position: absolute;
+            top: 40px;
+            right: -20px;
+            color: var(--gray-pale);
+        }
+        .step-item:last-child .step-arrow {
+            display: none;
+        }
+
+        /* Detail Content */
+        .detail-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px 10px;
+        }
+        .detail-section {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+        }
+        .detail-row {
+            display: flex;
+            gap: 40px;
+        }
+        .detail-label {
+            width: 120px;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .detail-value {
+            flex: 1;
+            font-size: 14px;
+            color: var(--gray-dark);
+            line-height: 1.9;
+        }
+        .detail-value p {
+            margin-bottom: 12px;
+        }
+        .detail-value p:last-child {
+            margin-bottom: 0;
+        }
+        .detail-value ul {
+            list-style: none;
+            padding: 0;
+        }
+        .detail-value ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 8px;
+        }
+        .detail-value ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        .detail-value .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .detail-value .sub-text {
+            font-size: 13px;
+            color: var(--gray-light);
+            margin-top: 4px;
+        }
+        .notice-box {
+            background: var(--primary-soft);
+            border-left: 3px solid var(--primary);
+            padding: 16px 20px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+        .notice-box p {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* Document Table */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .doc-table thead th {
+            background: var(--green-light);
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .doc-table tbody td {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: var(--gray-dark);
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .doc-table tbody td:first-child {
+            background: var(--bg-light);
+            font-weight: 500;
+            text-align: center;
+            width: 140px;
+        }
+
+        /* Download Buttons */
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .download-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: var(--green-light);
+            border-radius: 12px;
+        }
+        .download-item span {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .download-btn:hover {
+            background: #019a79;
+        }
+
+        /* Document List (No Table) */
+        .doc-list-section {
+            margin-top: 12px;
+        }
+        .doc-list-group {
+            margin-bottom: 20px;
+        }
+        .doc-list-group:last-child {
+            margin-bottom: 0;
+        }
+        .doc-list-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            padding-left: 4px;
+        }
+        .doc-list-items {
+            list-style: none;
+            padding: 0;
+        }
+        .doc-list-items li {
+            position: relative;
+            padding: 6px 0 6px 20px;
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        .doc-list-items li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--gray-light);
+        }
+
+        /* Accordion */
+        .accordion-section {
+            border-top: 1px solid var(--border);
+        }
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .accordion-header:hover .accordion-title {
+            color: var(--primary);
+        }
+        .accordion-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: color 0.2s;
+        }
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--text-gray);
+            transition: transform 0.3s, color 0.2s;
+        }
+        .accordion-header:hover .accordion-icon {
+            color: var(--primary);
+        }
+        .accordion-section.active .accordion-icon {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+        .accordion-content {
+            display: none;
+            padding-bottom: 24px;
+        }
+        .accordion-section.active .accordion-content {
+            display: block;
+        }
+
+        /* CTA Buttons */
+        .cta-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 40px 120px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cta-btn.primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(1, 177, 139, 0.25);
+        }
+        .cta-btn.primary:hover {
+            background: #019a79;
+            box-shadow: 0 6px 20px rgba(1, 177, 139, 0.35);
+            transform: translateY(-1px);
+        }
+        .cta-btn.secondary {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+        .cta-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        /* Footer */
+        .footer { background: var(--text-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+        .footer-nav-group a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav { display: none; }
+            .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .breadcrumb-inner { padding: 0 20px; }
+            .detail-hero { padding: 40px 20px 30px; }
+            .detail-title { font-size: 24px; }
+            .detail-desc { font-size: 14px; }
+            .step-process { padding: 0 20px 30px; overflow-x: auto; }
+            .step-process-box { padding: 24px 16px; }
+            .step-timeline { min-width: 600px; }
+            .detail-content { padding: 0 20px 40px; }
+            .detail-row { flex-direction: column; gap: 12px; }
+            .detail-label { width: 100%; }
+            .cta-section { flex-direction: column; padding: 30px 20px 80px; }
+            .cta-btn { width: 100%; }
+            .download-item { padding: 16px 20px; }
+            .download-item span { font-size: 14px; }
+            .download-btn { padding: 8px 16px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html" class="active">장학생 선발</a>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html">재단소식</a>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html" class="active">장학생 선발</a>
+        <a href="news.html">재단소식</a>
+        <a href="resources.html">자료실</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <div class="breadcrumb-inner">
+                <a href="index.html" class="breadcrumb-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                        <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                        <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    </svg>
+                </a>
+                <span class="breadcrumb-divider">|</span>
+                <span class="breadcrumb-current">장학생 선발</span>
+                <span class="breadcrumb-divider">|</span>
+                <span class="breadcrumb-current">선발 공지</span>
+            </div>
+        </div>
+
+        <!-- 상단 영역 -->
+        <section class="detail-hero">
+            <div class="detail-hero-inner">
+                <span class="detail-category">대학</span>
+                <h1 class="detail-title">장학사업 장학생 선발 공지합니다.</h1>
+                <p class="detail-desc">현송교육문화재단은 학업에 정진하는 우수한 인재를 발굴하고 지원하기 위해<br>장학생을 선발하오니 많은 관심과 지원 바랍니다.</p>
+            </div>
+        </section>
+
+        <!-- STEP 프로세스 영역 -->
+        <section class="step-process">
+            <div class="step-process-box">
+                <div class="step-timeline">
+                    <div class="step-item active">
+                        <span class="step-number">STEP 01</span>
+                        <div class="step-dot">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+                        </div>
+                        <span class="step-label">선발 공고</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">STEP 02</span>
+                        <div class="step-dot">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25Z" />
+                            </svg>
+                        </div>
+                        <span class="step-label">추천서 및<br>서류 접수</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">STEP 03</span>
+                        <div class="step-dot">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </div>
+                        <span class="step-label">내부 심사 및<br>검토</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">STEP 04</span>
+                        <div class="step-dot">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                        <span class="step-label">장학생 선발 및<br>장학금 지급</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 상세 정보 영역 -->
+        <div class="detail-content">
+            <!-- 지원자격 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">지원자격</div>
+                    <div class="detail-value">
+                        <ul>
+                            <li>국내 4년제 대학교 재학생 (휴학생 제외)</li>
+                            <li>직전 학기 성적 평점 3.5/4.5 이상인 자</li>
+                            <li>학교 또는 지도교수의 추천을 받은 자</li>
+                            <li>타 장학금과 중복 수혜가 아닌 자</li>
+                        </ul>
+                        <p class="sub-text">※ 휴학 예정자, 졸업 예정자(해당 학기 졸업)는 지원 불가</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 모집 일정 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">모집 일정</div>
+                    <div class="detail-value">
+                        <p><span class="highlight">2025.01.02 (목) ~ 2025.02.15 (토)</span></p>
+                        <p class="sub-text">※ 마감일 18:00까지 접수 완료된 건에 한함</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 지원내용 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">지원내용</div>
+                    <div class="detail-value">
+                        <ul>
+                            <li>학기당 등록금 전액 또는 일부 지원</li>
+                            <li>학업장려금 별도 지급 (선발 인원에 따라 상이)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 신청방법 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">신청방법</div>
+                    <div class="detail-value">
+                        <p>1. 현송교육문화재단 홈페이지 회원가입 및 로그인</p>
+                        <p>2. [장학생 선발] > [선발공지]에서 해당 공지 확인</p>
+                        <p>3. [신청하기] 버튼 클릭 후 온라인 신청서 작성</p>
+                        <p>4. 필수 서류 업로드 후 접수 완료</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 제출서류 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">제출서류</div>
+                    <div class="detail-value">
+                        <div class="doc-list-section">
+                            <div class="doc-list-group">
+                                <div class="doc-list-label">필수 제출 서류</div>
+                                <ul class="doc-list-items">
+                                    <li>장학금 신청서 (소정 양식)</li>
+                                    <li>성적증명서 (직전 학기)</li>
+                                    <li>재학증명서</li>
+                                    <li>추천서 (학교장 또는 지도교수)</li>
+                                    <li>개인정보 수집·이용 동의서</li>
+                                </ul>
+                            </div>
+                            <div class="doc-list-group">
+                                <div class="doc-list-label">해당자 제출 서류</div>
+                                <ul class="doc-list-items">
+                                    <li>국가장학금 수혜 현황 증빙</li>
+                                    <li>기타 재단이 요청하는 서류</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="sub-text" style="margin-top: 12px;">※ 서류 작성 및 발급 유효기간 : 3개월</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 유의사항 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">유의사항</div>
+                    <div class="detail-value">
+                        <ul>
+                            <li>심사결과는 개별 안내드립니다.</li>
+                            <li>필수 제출서류 누락 및 오제출 시 심사 대상에서 제외됩니다.</li>
+                            <li>모든 서류는 원본 제출을 원칙으로 하며, 연락처 미기재 등으로 서류보완이 원활치 못해 발생하는 불이익은 본인에게 책임이 있습니다.</li>
+                            <li>심사과정에서 추가자료 요청 및 유선심사가 진행될 수 있으며, 제출된 서류는 일체 반환하지 않습니다.</li>
+                            <li>심사를 통해 감액 및 부적격, 사용한도 제한 등 변동사항이 발생할 수 있습니다.</li>
+                            <li>개인(신용)정보조회동의서, 개인정보 수집·조회·활용 및 제3자 제공동의서 작성을 거부하거나, 동의하지 않는 경우 지원에 제한이 있을 수 있습니다.</li>
+                            <li>신청내용은 사실에 근거해야 하며, 허위사실 확인 시 지급 취소 및 반환해야 합니다.</li>
+                            <li>심사는 재단 고유의 과정이므로 구체적인 내용은 공개하지 않습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 문의처 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">문의처</div>
+                    <div class="detail-value">
+                        <p><strong>현송교육문화재단</strong></p>
+                        <p>TEL 02-2612-7150, 7140</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 신청서류 -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <div class="detail-label">신청서류</div>
+                    <div class="detail-value">
+                        <div class="download-list">
+                            <div class="download-item">
+                                <span>모집공고문</span>
+                                <a href="#" class="download-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                    다운로드
+                                </a>
+                            </div>
+                            <div class="download-item">
+                                <span>장학금 신청서</span>
+                                <a href="#" class="download-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                    다운로드
+                                </a>
+                            </div>
+                            <div class="download-item">
+                                <span>추천서 양식</span>
+                                <a href="#" class="download-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                    다운로드
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 지원 제한 업종 (아코디언) -->
+            <div class="accordion-section">
+                <div class="accordion-header">
+                    <span class="accordion-title">지원 제한 사항</span>
+                    <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </div>
+                <div class="accordion-content">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="position: relative; padding-left: 16px; margin-bottom: 8px; font-size: 14px; color: var(--gray-dark);">
+                            <span style="position: absolute; left: 0; color: var(--primary);">•</span>
+                            타 장학금 중복 수혜자
+                        </li>
+                        <li style="position: relative; padding-left: 16px; margin-bottom: 8px; font-size: 14px; color: var(--gray-dark);">
+                            <span style="position: absolute; left: 0; color: var(--primary);">•</span>
+                            휴학 예정자 또는 휴학 중인 자
+                        </li>
+                        <li style="position: relative; padding-left: 16px; margin-bottom: 8px; font-size: 14px; color: var(--gray-dark);">
+                            <span style="position: absolute; left: 0; color: var(--primary);">•</span>
+                            해당 학기 졸업 예정자
+                        </li>
+                        <li style="position: relative; padding-left: 16px; font-size: 14px; color: var(--gray-dark);">
+                            <span style="position: absolute; left: 0; color: var(--primary);">•</span>
+                            성적 기준 미달자
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA 버튼 -->
+        <div class="cta-section">
+            <a href="scholarship-apply.html" class="cta-btn primary">신청하기</a>
+            <a href="login.html" class="cta-btn secondary">신청내역 확인하기</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html">재단 소개</a><a href="about.html#history">연혁</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208 | TEL : 02-2612-7150, 7140</div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

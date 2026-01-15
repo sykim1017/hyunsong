@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재단소식 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01B18B;
+            --lime: rgba(228, 254, 243, 0.8);
+            --green-light: #EDF6E8;
+            --black: #222222;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --gray-pale: #CCCCCC;
+            --gray-border: #E5E5E5;
+            --bg: #F5F5F5;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 50px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: #01B18B; border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 14px 0; font-size: 15px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); transition: color 0.2s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--primary); }
+        .mobile-nav-utils { display: flex; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-border); }
+        .mobile-nav-utils a { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 15px; color: var(--gray); border-bottom: none; }
+        .mobile-nav-utils svg { width: 20px; height: 20px; }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; }
+        /* Breadcrumb */
+        .breadcrumb { padding: 20px 0; background: var(--white); }
+        .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 12px; }
+        .breadcrumb-home { color: var(--primary); display: flex; align-items: center; }
+        .breadcrumb-home:hover { opacity: 0.8; }
+        .breadcrumb-divider { color: var(--gray-border); font-size: 14px; }
+        .breadcrumb-current { font-size: 14px; color: var(--gray-light); }
+        /* Page Header */
+        .page-header { background: var(--white); padding: 20px 40px 20px; text-align: center; }
+        .page-header-inner { max-width: 1200px; margin: 0 auto; }
+        .page-title { font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 40px; }
+        /* Sub Navigation Tabs */
+        .sub-nav-tabs { display: flex; gap: 0; width: 100%; max-width: 1120px; margin: 0 auto; background: #F7FAF4; border-radius: 50px; padding: 4px; }
+        .tab-item { flex: 1; padding: 12px 8px; font-size: 15px; font-weight: 500; color: var(--gray-light); text-decoration: none; border: none; transition: all 0.2s; background: transparent; text-align: center; border-radius: 50px; }
+        .tab-item:hover { color: var(--primary); }
+        .tab-item.active { color: var(--white); background: var(--primary); }
+        .content-section { max-width: 1200px; margin: 0 auto; padding: 20px 40px 100px; }
+        .section-hidden { display: none; }
+
+        /* 게시판 스타일 */
+        .board-section { padding: 20px 0; }
+        .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .board-total { font-size: 14px; color: var(--gray); }
+        .board-total strong { color: var(--primary); font-weight: 700; }
+        .board-search { display: flex; gap: 8px; }
+        .board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        .board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
+        .board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+
+        .board-list { border-top: 2px solid var(--primary); }
+        .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
+        .board-item:hover { background: #FAFAFA; }
+        .board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-category { width: 100px; padding: 4px 12px; background: var(--green-light); color: var(--primary); font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; }
+        .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .board-title:hover { color: var(--primary); }
+        .board-title .new { display: inline-block; margin-left: 8px; padding: 2px 6px; background: var(--lime); color: var(--white); font-size: 10px; font-weight: 700; border-radius: 4px; }
+        .board-date { width: 100px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-views { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+
+        .board-pagination { display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 40px; }
+        .board-pagination a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray); text-decoration: none; transition: all 0.2s; }
+        .board-pagination a:hover { border-color: var(--primary); color: var(--primary); }
+        .board-pagination a.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+        .board-pagination a.arrow { font-size: 12px; }
+
+        .footer { background: var(--gray-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; }
+        .footer-nav-group a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .family-site { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 10px 16px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav { display: none; }
+            .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+            .board-search { flex-wrap: wrap; }
+            .board-search input { width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .breadcrumb { padding: 12px 16px; }
+            .breadcrumb-inner { gap: 10px; }
+            .breadcrumb-current { font-size: 13px; }
+            .page-header { padding: 30px 16px 30px; }
+            .page-title { font-size: 26px; margin-bottom: 30px; }
+            .sub-nav-tabs { gap: 0; flex-wrap: wrap; }
+            .tab-item { flex: 1 1 calc(33.333%); min-width: calc(33.333%); padding: 10px 4px; font-size: 12px; border-radius: 0; }
+            .tab-item:first-child { border-radius: 8px 0 0 0; }
+            .tab-item:nth-child(3) { border-radius: 0 8px 0 0; }
+            .tab-item:nth-child(4) { border-radius: 0 0 0 8px; }
+            .tab-item:last-child { border-radius: 0 0 8px 0; }
+            .tab-item:nth-child(n+4) { margin-top: -1px; }
+            .content-section { padding: 20px 20px 60px; }
+            .board-search { flex-wrap: nowrap; gap: 6px; }
+            .board-search select { padding: 8px 10px; font-size: 13px; flex-shrink: 0; }
+            .board-search input { flex: 1; min-width: 0; padding: 8px 10px; font-size: 13px; }
+            .board-search button { padding: 8px 14px; font-size: 13px; flex-shrink: 0; }
+            .board-item { flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+            .board-num { display: none; }
+            .board-title { width: 100%; order: 1; font-size: 15px; }
+            .board-category { order: 0; font-size: 11px; padding: 3px 10px; }
+            .board-date { width: auto; order: 2; font-size: 12px; }
+            .board-views { width: auto; order: 3; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                    <div class="sub-menu">
+                        <a href="programs.html#scholarship">장학사업</a>
+                        <a href="programs.html#research">학술연구지원사업</a>
+                        <a href="programs.html#youth">청소년육성지원사업</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html">장학생 선발</a>
+                    <div class="sub-menu">
+                        <a href="scholarship.html#notice">선발 공지</a>
+                        <a href="scholarship.html#documents">신청 서류</a>
+                        <a href="scholarship.html#faq">자주 묻는 질문</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html" class="active">재단소식</a>
+                    <div class="sub-menu">
+                        <a href="news.html#notice">공지사항</a>
+                        <a href="news.html#news">재단 뉴스</a>
+                        <a href="news.html#disclosure">공익법인공시</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                    <div class="sub-menu">
+                        <a href="resources.html#photo">포토갤러리</a>
+                        <a href="resources.html#downloads">서식자료실</a>
+                        
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html">장학생 선발</a>
+        <a href="news.html" class="active">재단소식</a>
+        <a href="resources.html">자료실</a>
+        <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
+        <div class="mobile-nav-utils">
+            <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>로그인</a>
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg>ENG</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="breadcrumb">
+            <div class="breadcrumb-inner">
+                <a href="index.html" class="breadcrumb-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                        <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                        <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    </svg>
+                </a>
+                <span class="breadcrumb-divider">|</span>
+                <span class="breadcrumb-current">재단소식</span>
+            </div>
+        </div>
+        <div class="page-header">
+            <div class="page-header-inner">
+                <h1 class="page-title">재단소식</h1>
+                <div class="sub-nav-tabs">
+                    <a href="#notice" class="tab-item active">공지사항</a>
+                    <a href="#disclosure" class="tab-item">공익법인공시</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-section">
+            <section id="notice" class="board-section">
+                <div class="board-header">
+                    <div class="board-total">총 <strong>128</strong>건</div>
+                    <div class="board-search">
+                        <select>
+                            <option>구분</option>
+                            <option>제목</option>
+                            <option>제목+내용</option>
+                        </select>
+                        <input type="text" placeholder="검색어를 입력하세요">
+                        <button>검색</button>
+                    </div>
+                </div>
+                <div class="board-list">
+                    <div class="board-item">
+                        <span class="board-num">128</span>
+                        <span class="board-category">행사안내</span>
+                        <a href="news-detail.html" class="board-title">2025년 상반기 장학생 선발 공고 <span class="new">NEW</span></a>
+                        <span class="board-date">2025.01.02</span>
+                        <span class="board-views">152</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">127</span>
+                        <span class="board-category">재단소식</span>
+                        <a href="news-detail.html" class="board-title">재단 사무실 이전 안내</a>
+                        <span class="board-date">2024.12.20</span>
+                        <span class="board-views">89</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">126</span>
+                        <span class="board-category">장학금 지급현황</span>
+                        <a href="news-detail.html" class="board-title">2024년 장학증서 수여식 개최</a>
+                        <span class="board-date">2024.12.15</span>
+                        <span class="board-views">234</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">125</span>
+                        <span class="board-category">행사안내</span>
+                        <a href="#" class="board-title">청소년 리더십 캠프 성료</a>
+                        <span class="board-date">2024.12.10</span>
+                        <span class="board-views">178</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">124</span>
+                        <span class="board-category">장학금 지급현황</span>
+                        <a href="#" class="board-title">2024년 하반기 장학금 지급 안내</a>
+                        <span class="board-date">2024.12.01</span>
+                        <span class="board-views">312</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">123</span>
+                        <span class="board-category">재단소식</span>
+                        <a href="#" class="board-title">현송교육문화재단 창립 20주년 기념식</a>
+                        <span class="board-date">2024.11.25</span>
+                        <span class="board-views">456</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">122</span>
+                        <span class="board-category">행사안내</span>
+                        <a href="#" class="board-title">2024년 학술연구지원 성과발표회 안내</a>
+                        <span class="board-date">2024.11.20</span>
+                        <span class="board-views">198</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">121</span>
+                        <span class="board-category">장학금 지급현황</span>
+                        <a href="#" class="board-title">외국인 대학원생 장학금 지급 완료</a>
+                        <span class="board-date">2024.11.15</span>
+                        <span class="board-views">267</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">120</span>
+                        <span class="board-category">재단소식</span>
+                        <a href="#" class="board-title">재단 이사회 정기회의 결과 공지</a>
+                        <span class="board-date">2024.11.10</span>
+                        <span class="board-views">145</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">119</span>
+                        <span class="board-category">행사안내</span>
+                        <a href="#" class="board-title">장학생 멘토링 프로그램 참가자 모집</a>
+                        <span class="board-date">2024.11.05</span>
+                        <span class="board-views">321</span>
+                    </div>
+                </div>
+                <div class="board-pagination">
+                    <a href="#" class="arrow">‹</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">...</a>
+                    <a href="#">13</a>
+                    <a href="#" class="arrow">›</a>
+                </div>
+            </section>
+            <section id="disclosure" class="board-section section-hidden">
+                <div class="board-header">
+                    <div class="board-total">총 <strong>45</strong>건</div>
+                    <div class="board-search">
+                        <select>
+                            <option>구분</option>
+                            <option>제목</option>
+                            <option>제목+내용</option>
+                        </select>
+                        <input type="text" placeholder="검색어를 입력하세요">
+                        <button>검색</button>
+                    </div>
+                </div>
+                <div class="board-list">
+                    <div class="board-item">
+                        <span class="board-num">45</span>
+                        <span class="board-category">공시</span>
+                        <a href="#" class="board-title">2024년도 결산서류 공시</a>
+                        <span class="board-date">2025.03.31</span>
+                        <span class="board-views">56</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">44</span>
+                        <span class="board-category">공시</span>
+                        <a href="#" class="board-title">2024년도 사업계획 공시</a>
+                        <span class="board-date">2024.03.31</span>
+                        <span class="board-views">78</span>
+                    </div>
+                </div>
+                <div class="board-pagination">
+                    <a href="#" class="arrow">‹</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#" class="arrow">›</a>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html#intro">재단 소개</a><a href="about.html#history">연혁</a><a href="about.html#organization">조직도</a><a href="about.html#location">오시는 길</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a><a href="programs.html#youth">청소년육성지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a><a href="scholarship.html#faq">자주 묻는 질문</a></div>
+                    <div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#news">재단 뉴스</a><a href="news.html#disclosure">공익법인공시</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208|TEL : 02-2612-7150, 7140</div>
+                <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+                <button class="family-site">패밀리사이트 →</button>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.tab-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.tab-nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                const targetId = this.getAttribute('href').substring(1);
+                document.querySelectorAll('.content-section > section').forEach(section => section.classList.add('section-hidden'));
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) targetSection.classList.remove('section-hidden');
+            });
+        });
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+    </script>
+</body>
+</html>

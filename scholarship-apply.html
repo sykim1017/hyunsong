@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장학생 신청하기 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01B18B;
+            --primary-light: rgba(148, 255, 186, 0.21);
+            --primary-soft: rgba(1, 177, 139, 0.08);
+            --green-light: #E8F5F1;
+            --black: #222222;
+            --text-dark: #3E3A39;
+            --text-gray: #8E93A6;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --gray-pale: #CCCCCC;
+            --border: #E5E5E5;
+            --bg-light: #F8F8F8;
+            --bg-card: #FBFCFF;
+            --white: #FFFFFF;
+            --required: #E57373;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 50px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: #01B18B; border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 14px 0; font-size: 15px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--primary); }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; min-height: 100vh; }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 40px 40px;
+            text-align: center;
+        }
+        .page-category {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+        .page-desc {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        .page-notice {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray-light);
+        }
+        .page-contact {
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Form Container */
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        /* Section */
+        .form-section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--text-dark);
+            margin-bottom: 0;
+        }
+
+        /* Form Row */
+        .form-row {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+        .form-row:last-child {
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Label */
+        .form-label {
+            width: 180px;
+            flex-shrink: 0;
+            padding: 20px 16px;
+            background: var(--bg-light);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            border-right: 1px solid var(--border);
+        }
+        .required-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--required);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* Form Value */
+        .form-value {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-value.row {
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Input */
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: var(--white);
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-input::placeholder {
+            color: var(--gray-pale);
+        }
+        .form-input.short {
+            max-width: 200px;
+        }
+        .form-input.medium {
+            max-width: 300px;
+        }
+
+        /* Textarea */
+        .form-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: var(--white);
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-textarea::placeholder {
+            color: var(--gray-pale);
+        }
+
+        /* Select */
+        .form-select {
+            padding: 12px 40px 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            min-width: 180px;
+        }
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Helper Text */
+        .helper-text {
+            font-size: 12px;
+            color: var(--gray-light);
+            margin-top: 4px;
+        }
+
+        /* Inline Label */
+        .inline-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            white-space: nowrap;
+        }
+        .inline-label .required-badge {
+            margin-left: 0;
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .file-preview {
+            width: 120px;
+            height: 80px;
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-light);
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+        .file-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: var(--gray-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .file-btn:hover {
+            background: var(--black);
+        }
+        .file-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .file-info {
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+
+        /* Table */
+        .form-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .form-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .form-table thead th {
+            background: var(--bg-light);
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .form-table tbody td {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: var(--gray-dark);
+            border: 1px solid var(--border);
+            text-align: center;
+            vertical-align: middle;
+        }
+        .form-table tbody td .form-input,
+        .form-table tbody td .form-select {
+            width: 100%;
+        }
+        .form-table .label-cell {
+            background: var(--bg-light);
+            font-weight: 500;
+            width: 100px;
+        }
+
+        /* Add Row Button */
+        .add-row-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 16px;
+        }
+        .add-row-btn:hover {
+            background: var(--primary-soft);
+        }
+
+        /* Submit Button */
+        .submit-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 80px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(1, 177, 139, 0.25);
+        }
+        .submit-btn:hover {
+            background: #019a79;
+            box-shadow: 0 6px 20px rgba(1, 177, 139, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer { background: var(--text-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+        .footer-nav-group a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav { display: none; }
+            .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .page-header { padding: 40px 20px 30px; }
+            .page-title { font-size: 22px; }
+            .form-container { padding: 0 20px 60px; }
+            .form-row { flex-direction: column; }
+            .form-label {
+                width: 100%;
+                padding: 12px 16px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .form-value { padding: 16px; }
+            .form-value.row { flex-direction: column; align-items: stretch; }
+            .inline-label { width: 100%; margin-bottom: 8px; }
+            .form-input.short, .form-input.medium { max-width: none; }
+            .form-select { width: 100%; }
+            .submit-btn { width: 100%; padding: 16px 40px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                    <div class="sub-menu">
+                        <a href="programs.html#scholarship">장학사업</a>
+                        <a href="programs.html#research">학술연구지원사업</a>
+                        <a href="programs.html#youth">청소년육성지원사업</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html" class="active">장학생 선발</a>
+                    <div class="sub-menu">
+                        <a href="scholarship.html#notice">선발 공지</a>
+                        <a href="scholarship.html#documents">신청 서류</a>
+                        <a href="scholarship.html#faq">자주 묻는 질문</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html">재단소식</a>
+                    <div class="sub-menu">
+                        <a href="news.html#notice">공지사항</a>
+                        <a href="news.html#news">재단 뉴스</a>
+                        <a href="news.html#disclosure">공익법인공시</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                    <div class="sub-menu">
+                        <a href="resources.html#photo">포토갤러리</a>
+                        <a href="resources.html#downloads">서식자료실</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html" class="active">장학생 선발</a>
+        <a href="news.html">재단소식</a>
+        <a href="resources.html">자료실</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <span class="page-category">장학생 신청하기</span>
+            <h1 class="page-title">2025년 상반기 장학생 선발</h1>
+            <p class="page-desc">
+                본 신청서는 2025년 상반기 장학생 선발 참가 접수를 위한 페이지입니다.<br>
+                각 항목에 맞는 내용을 작성 및 제출해 주시기 바랍니다.
+            </p>
+            <p class="page-notice">※ 제출된 자료는 심사에 활용되며, 반환되지 않습니다.</p>
+            <p class="page-contact">문의처 : 02-2612-7150, 7140</p>
+        </div>
+
+        <div class="form-container">
+            <form id="scholarshipForm">
+                <!-- 장학생 인적사항 -->
+                <div class="form-section">
+                    <h2 class="section-title">장학생 인적사항</h2>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            성명(한글)
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="text" class="form-input" placeholder="이름을 입력해 주세요.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            성명(한자)
+                        </div>
+                        <div class="form-value">
+                            <input type="text" class="form-input" placeholder="한자 이름을 입력해 주세요.">
+                            <span class="helper-text">한자 이름이 없을 경우 적지 않아도 됩니다.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            생년월일
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="date" class="form-input short" placeholder="연도. 월. 일.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            연락처
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value row">
+                            <input type="tel" class="form-input medium" placeholder="010-0000-0000">
+                            <div class="inline-label">
+                                비상연락처
+                                <span class="required-badge">필수</span>
+                            </div>
+                            <input type="tel" class="form-input medium" placeholder="010-0000-0000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            이메일
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="email" class="form-input medium" placeholder="example@email.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            주소
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="text" class="form-input" placeholder="주소를 입력해 주세요.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            장학 구분
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value row">
+                            <select class="form-select">
+                                <option value="">선택해주세요</option>
+                                <option value="university">대학</option>
+                                <option value="graduate">대학원</option>
+                                <option value="highschool">고교</option>
+                            </select>
+                            <div class="inline-label">
+                                학년
+                                <span class="required-badge">필수</span>
+                            </div>
+                            <select class="form-select">
+                                <option value="">선택해주세요</option>
+                                <option value="1">1학년</option>
+                                <option value="2">2학년</option>
+                                <option value="3">3학년</option>
+                                <option value="4">4학년</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            소속학교
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="text" class="form-input" placeholder="학교명을 입력해 주세요.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            학과/전공
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <input type="text" class="form-input" placeholder="학과 또는 전공을 입력해 주세요.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            증명사진
+                        </div>
+                        <div class="form-value">
+                            <div class="file-upload-area">
+                                <div class="file-preview">미리보기 없음</div>
+                                <label class="file-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                    </svg>
+                                    이미지 선택
+                                    <input type="file" accept="image/*" style="display: none;">
+                                </label>
+                                <span class="file-info">JPG, PNG 파일을 업로드 해주세요. (최대 용량 5MB 제한)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 학력 -->
+                <div class="form-section">
+                    <h2 class="section-title">학력</h2>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            중학교
+                        </div>
+                        <div class="form-value row">
+                            <input type="text" class="form-input medium" placeholder="학교명">
+                            <div class="inline-label">소재지</div>
+                            <input type="text" class="form-input short" placeholder="예: 서울">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            고등학교
+                        </div>
+                        <div class="form-value row">
+                            <input type="text" class="form-input medium" placeholder="학교명">
+                            <div class="inline-label">소재지</div>
+                            <input type="text" class="form-input short" placeholder="예: 서울">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            대학교
+                        </div>
+                        <div class="form-value row">
+                            <input type="text" class="form-input medium" placeholder="학교명">
+                            <div class="inline-label">소재지</div>
+                            <input type="text" class="form-input short" placeholder="예: 서울">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 가족사항 -->
+                <div class="form-section">
+                    <h2 class="section-title">가족사항</h2>
+
+                    <div class="form-table-wrapper">
+                        <table class="form-table" id="familyTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">관계</th>
+                                    <th style="width: 120px;">성명</th>
+                                    <th style="width: 80px;">연령</th>
+                                    <th>직업</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-input" placeholder="예: 부"></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-input" placeholder="예: 모"></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                    <td><input type="text" class="form-input" placeholder=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="add-row-btn" id="addFamilyRow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        가족 추가
+                    </button>
+                </div>
+
+                <!-- 자기소개 -->
+                <div class="form-section">
+                    <h2 class="section-title">자기소개</h2>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            지원동기
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <textarea class="form-textarea" placeholder="지원동기를 간단하게 작성해 주세요."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            향후 계획
+                        </div>
+                        <div class="form-value">
+                            <textarea class="form-textarea" placeholder="학업 계획 및 향후 진로 계획을 작성해 주세요."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 제출서류 -->
+                <div class="form-section">
+                    <h2 class="section-title">제출서류 업로드</h2>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            성적증명서
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <div class="file-upload-area">
+                                <label class="file-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    파일 선택
+                                    <input type="file" accept=".pdf,.jpg,.png" style="display: none;">
+                                </label>
+                                <span class="file-info">PDF, JPG, PNG 파일을 업로드 해주세요. (최대 용량 10MB 제한)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            재학증명서
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <div class="file-upload-area">
+                                <label class="file-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    파일 선택
+                                    <input type="file" accept=".pdf,.jpg,.png" style="display: none;">
+                                </label>
+                                <span class="file-info">PDF, JPG, PNG 파일을 업로드 해주세요. (최대 용량 10MB 제한)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            추천서
+                            <span class="required-badge">필수</span>
+                        </div>
+                        <div class="form-value">
+                            <div class="file-upload-area">
+                                <label class="file-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    파일 선택
+                                    <input type="file" accept=".pdf,.jpg,.png" style="display: none;">
+                                </label>
+                                <span class="file-info">PDF, JPG, PNG 파일을 업로드 해주세요. (최대 용량 10MB 제한)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">
+                            기타 서류
+                        </div>
+                        <div class="form-value">
+                            <div class="file-upload-area">
+                                <label class="file-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    파일 선택
+                                    <input type="file" accept=".pdf,.jpg,.png" style="display: none;">
+                                </label>
+                                <span class="file-info">PDF, JPG, PNG 파일을 업로드 해주세요. (최대 용량 10MB 제한)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">신청하기</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html">재단 소개</a><a href="about.html#history">연혁</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208 | TEL : 02-2612-7150, 7140</div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        // Add family row
+        document.getElementById('addFamilyRow').addEventListener('click', function() {
+            const tbody = document.querySelector('#familyTable tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="form-input" placeholder=""></td>
+                <td><input type="text" class="form-input" placeholder=""></td>
+                <td><input type="text" class="form-input" placeholder=""></td>
+                <td><input type="text" class="form-input" placeholder=""></td>
+            `;
+            tbody.appendChild(newRow);
+        });
+
+        // Form submit
+        document.getElementById('scholarshipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('신청이 완료되었습니다.');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+/* ========================================
+   현송교육문화재단 - 공통 CSS
+   ======================================== */
+
+:root {
+    --primary: #01B18B;
+    --primary-light: rgba(148, 255, 186, 0.21);
+    --text-dark: #3E3A39;
+    --text-gray: #8E93A6;
+    --border: #C6C9D7;
+    --bg-light: #F2F3F8;
+    --bg-card: #FBFCFF;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    background: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    z-index: 1000;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    gap: 50px;
+}
+
+.main-nav > .nav-item {
+    position: relative;
+}
+
+.main-nav > .nav-item > a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.2s;
+    display: block;
+    padding: 10px 0;
+}
+
+.main-nav > .nav-item > a:hover,
+.main-nav > .nav-item > a.active {
+    color: var(--primary);
+}
+
+.main-nav > .nav-item > a.active::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: -6px;
+    width: 6px;
+    height: 6px;
+    background: #01B18B;
+    border-radius: 50%;
+}
+
+/* Sub Menu */
+.sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    min-width: 180px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    padding: 12px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+}
+
+.nav-item:hover .sub-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sub-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.sub-menu a:hover {
+    background: var(--bg-light);
+    color: var(--primary);
+}
+
+/* Header Utils */
+.header-utils {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-utils a {
+    color: var(--text-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    transition: color 0.2s;
+}
+
+.header-utils a:hover {
+    color: var(--primary);
+}
+
+.header-utils svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-dark);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger span:nth-child(1) {
+    margin-bottom: 6px;
+}
+
+.hamburger span:nth-child(3) {
+    margin-top: 6px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Nav */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--white);
+    z-index: 999;
+    padding: 40px 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-nav.active {
+    transform: translateX(0);
+}
+
+.mobile-nav a {
+    display: block;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+    color: var(--primary);
+}
+
+.mobile-nav-utils {
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.mobile-nav-utils a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    font-size: 15px;
+    color: var(--text-gray);
+    border-bottom: none;
+}
+
+.mobile-nav-utils svg {
+    width: 20px;
+    height: 20px;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ========================================
+   Main Content
+   ======================================== */
+.main-content {
+    flex: 1;
+    padding-top: 70px;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+.footer {
+    background: var(--text-dark);
+    padding: 50px 40px;
+    margin-top: auto;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.footer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.footer-nav {
+    display: flex;
+    gap: 60px;
+}
+
+.footer-nav-group h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.footer-nav-group a {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+}
+
+.footer-nav-group a:hover {
+    color: var(--white);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.footer-info {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.8;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--white);
+}
+
+.footer-copyright {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-copyright p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.family-site {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    padding: 10px 16px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.family-site:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--white);
+}
+
+/* ========================================
+   Responsive - Tablet
+   ======================================== */
+@media (max-width: 1024px) {
+    .header-inner {
+        padding: 0 20px;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .header-utils {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .footer {
+        padding: 40px 20px;
+    }
+
+    .footer-nav {
+        display: none;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .footer-copyright {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
+/* ========================================
+   Responsive - Mobile
+   ======================================== */
+@media (max-width: 768px) {
+    .header-inner {
+        height: 70px;
+    }
+
+    .mobile-nav {
+        top: 70px;
+    }
+
+    .main-content {
+        padding-top: 70px;
+    }
+
+    .logo-img {
+        height: 32px;
+    }
+}
