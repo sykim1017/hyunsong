@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디/비밀번호 찾기 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root { --primary: #01B18B; --lime: rgba(228, 254, 243, 0.8); --green-light: #EDF6E8; --black: #222222; --gray-dark: #333333; --gray: #666666; --gray-light: #999999; --gray-pale: #CCCCCC; --gray-border: #E5E5E5; --bg: #F5F5F5; --white: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+        .header { background: var(--white); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); position: relative; z-index: 100; }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 20px; position: relative; overflow: hidden; }
+
+        /* Animated gradient blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(124, 181, 24, 0.4) 0%, rgba(173, 216, 230, 0.3) 100%);
+            top: -100px;
+            left: -100px;
+            animation: float1 8s ease-in-out infinite;
+        }
+        .blob-2 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, rgba(173, 216, 230, 0.35) 0%, rgba(124, 181, 24, 0.3) 100%);
+            bottom: -150px;
+            right: -100px;
+            animation: float2 10s ease-in-out infinite;
+        }
+        .blob-3 {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, rgba(124, 181, 24, 0.3) 0%, rgba(200, 230, 255, 0.4) 100%);
+            top: 50%;
+            left: -80px;
+            transform: translateY(-50%);
+            animation: float3 7s ease-in-out infinite;
+        }
+        .blob-4 {
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, rgba(200, 230, 255, 0.35) 0%, rgba(124, 181, 24, 0.25) 100%);
+            top: -50px;
+            right: 10%;
+            animation: float4 9s ease-in-out infinite;
+        }
+        .blob-5 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(124, 181, 24, 0.25) 0%, rgba(173, 216, 230, 0.35) 100%);
+            bottom: -80px;
+            left: 20%;
+            animation: float5 8s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, 20px) scale(1.05); }
+            66% { transform: translate(-20px, 30px) scale(0.95); }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-40px, -30px) scale(1.08); }
+            66% { transform: translate(20px, -20px) scale(0.92); }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: translateY(-50%) translate(0, 0) scale(1); }
+            50% { transform: translateY(-50%) translate(40px, 20px) scale(1.1); }
+        }
+        @keyframes float4 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, 40px) scale(1.05); }
+        }
+        @keyframes float5 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(25px, -15px) scale(1.08); }
+            66% { transform: translate(-15px, -25px) scale(0.95); }
+        }
+
+        .find-box { background: var(--white); border-radius: 20px; padding: 50px; width: 100%; max-width: 500px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08); position: relative; z-index: 1; }
+        .find-title { font-size: 28px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 12px; }
+        .find-subtitle { font-size: 15px; color: var(--gray); text-align: center; margin-bottom: 30px; }
+
+        /* Tab Navigation */
+        .tab-nav { display: flex; gap: 0; margin-bottom: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-border); }
+        .tab-btn { flex: 1; padding: 14px 20px; font-size: 15px; font-weight: 600; text-align: center; cursor: pointer; border: none; background: var(--bg); color: var(--gray); transition: all 0.3s; }
+        .tab-btn:hover { background: #E5E5E5; }
+        .tab-btn.active { background: var(--primary); color: var(--white); }
+
+        /* Tab Contents */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Form Notice */
+        .form-notice { text-align: center; margin-bottom: 30px; padding: 20px; background: var(--lime); border-radius: 12px; }
+        .form-notice p { font-size: 14px; color: var(--gray-dark); line-height: 1.6; }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+        .form-input { width: 100%; padding: 16px 18px; border: 1px solid var(--gray-border); border-radius: 12px; font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-input:focus { outline: none; border-color: var(--lime); box-shadow: 0 0 0 3px rgba(124, 181, 24, 0.1); }
+        .form-input::placeholder { color: var(--gray-pale); }
+
+        .input-with-btn { display: flex; gap: 10px; }
+        .input-with-btn .form-input { flex: 1; }
+        .verify-btn { padding: 16px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+        .verify-btn:hover { background: #019875; }
+
+        .submit-btn { width: 100%; padding: 18px; background: var(--primary); color: var(--white); border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .submit-btn:hover { background: #019875; }
+
+        /* Result Section */
+        .result-section { display: none; text-align: center; padding: 30px 0; }
+        .result-section.active { display: block; }
+        .result-message { font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 30px; line-height: 1.6; }
+        .result-buttons { display: flex; flex-direction: column; gap: 12px; }
+        .result-btn { display: block; padding: 16px 24px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; text-align: center; }
+        .result-btn.primary { background: var(--primary); color: var(--white); border: none; }
+        .result-btn.primary:hover { background: #019875; }
+        .result-btn.secondary { background: var(--white); color: var(--primary); border: 1px solid var(--gray-border); }
+        .result-btn.secondary:hover { border-color: var(--primary); }
+
+        /* Password Reset Section */
+        .password-reset-section { display: none; }
+        .password-reset-section.active { display: block; }
+        .password-hint { text-align: center; font-size: 13px; color: var(--primary); margin-top: 16px; }
+
+        .back-home { display: block; text-align: center; margin-top: 24px; font-size: 14px; color: var(--gray); text-decoration: none; }
+        .back-home:hover { color: var(--primary); }
+        .footer-simple { padding: 30px 20px; text-align: center; font-size: 12px; color: var(--gray-light); }
+
+        @media (max-width: 480px) {
+            .find-box { padding: 40px 24px; border-radius: 16px; }
+            .find-title { font-size: 24px; }
+            .input-with-btn { flex-direction: column; }
+            .verify-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Animated gradient blobs -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+
+        <div class="find-box">
+            <h1 class="find-title">계정 찾기</h1>
+            <p class="find-subtitle">아이디 또는 비밀번호를 찾을 수 있습니다</p>
+
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="findId">아이디 찾기</button>
+                <button class="tab-btn" data-tab="findPw">비밀번호 찾기</button>
+            </div>
+
+            <!-- 아이디 찾기 Form -->
+            <div class="tab-content active" id="findId">
+                <div class="find-id-form">
+                    <div class="form-notice">
+                        <p>회원가입 시 등록한 이메일을 입력하세요.<br>본인확인 이메일 주소와 입력한 이메일 주소가 같아야 인증번호를 받을 수 있습니다.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이름</label>
+                        <input type="text" class="form-input" id="findIdName" placeholder="이름을 입력하세요">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이메일 주소</label>
+                        <div class="input-with-btn">
+                            <input type="email" class="form-input" id="findIdEmail" placeholder="이메일을 입력하세요">
+                            <button class="verify-btn" onclick="sendVerificationCode('id')">인증번호</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">인증번호</label>
+                        <input type="text" class="form-input" id="findIdCode" placeholder="인증번호를 입력하세요">
+                    </div>
+
+                    <button class="submit-btn" onclick="showIdResult()">인증 완료</button>
+                </div>
+
+                <!-- Result -->
+                <div class="result-section" id="findIdResult">
+                    <p class="result-message">고객님의 아이디는<br><strong id="foundId">testuser123</strong> 입니다</p>
+                    <div class="result-buttons">
+                        <a href="login.html" class="result-btn primary">로그인하기</a>
+                        <button class="result-btn secondary" onclick="switchToPasswordTab()">비밀번호 찾기</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 비밀번호 찾기 Form -->
+            <div class="tab-content" id="findPw">
+                <div class="find-pw-form">
+                    <div class="form-notice">
+                        <p>회원가입 시 등록한 이메일을 입력하세요.<br>본인확인 이메일 주소와 입력한 이메일 주소가 같아야 인증번호를 받을 수 있습니다.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">아이디</label>
+                        <input type="text" class="form-input" id="findPwId" placeholder="아이디를 입력하세요">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이메일 주소</label>
+                        <div class="input-with-btn">
+                            <input type="email" class="form-input" id="findPwEmail" placeholder="이메일을 입력하세요">
+                            <button class="verify-btn" onclick="sendVerificationCode('pw')">인증번호</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">인증번호</label>
+                        <input type="text" class="form-input" id="findPwCode" placeholder="인증번호를 입력하세요">
+                    </div>
+
+                    <button class="submit-btn" onclick="showPasswordReset()">인증 완료</button>
+                </div>
+
+                <!-- Password Reset -->
+                <div class="password-reset-section" id="passwordReset">
+                    <div class="form-notice">
+                        <p>새로운 비밀번호를 설정해 주세요.<br>다른 아이디나 사이트에서 사용한 적 없는 안전한 비밀번호로 변경해 주세요.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">새 비밀번호</label>
+                        <input type="password" class="form-input" id="newPassword" placeholder="새 비밀번호를 입력하세요">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">새 비밀번호 확인</label>
+                        <input type="password" class="form-input" id="confirmPassword" placeholder="비밀번호를 다시 입력하세요">
+                    </div>
+
+                    <p class="password-hint">* 영문, 숫자, 특수문자를 함께 사용하면(8자 이상 16자 이하) 보다 안전합니다.</p>
+
+                    <button class="submit-btn" onclick="completePasswordReset()">비밀번호 변경</button>
+                </div>
+            </div>
+
+            <a href="login.html" class="back-home">← 로그인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <div class="footer-simple">
+        © 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(targetTab).classList.add('active');
+
+                resetForms();
+            });
+        });
+
+        function sendVerificationCode(type) {
+            alert('인증번호가 발송되었습니다.\n이메일을 확인해주세요.');
+        }
+
+        function showIdResult() {
+            document.querySelector('.find-id-form').style.display = 'none';
+            document.getElementById('findIdResult').classList.add('active');
+        }
+
+        function showPasswordReset() {
+            document.querySelector('.find-pw-form').style.display = 'none';
+            document.getElementById('passwordReset').classList.add('active');
+        }
+
+        function completePasswordReset() {
+            const newPw = document.getElementById('newPassword').value;
+            const confirmPw = document.getElementById('confirmPassword').value;
+
+            if (!newPw || !confirmPw) {
+                alert('비밀번호를 입력해주세요.');
+                return;
+            }
+
+            if (newPw !== confirmPw) {
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+
+            if (newPw.length < 8 || newPw.length > 16) {
+                alert('비밀번호는 8자 이상 16자 이하로 설정해주세요.');
+                return;
+            }
+
+            alert('비밀번호가 성공적으로 변경되었습니다.');
+            window.location.href = 'login.html';
+        }
+
+        function switchToPasswordTab() {
+            document.querySelector('[data-tab="findPw"]').click();
+        }
+
+        function resetForms() {
+            document.querySelector('.find-id-form').style.display = 'block';
+            document.getElementById('findIdResult').classList.remove('active');
+            document.getElementById('findIdName').value = '';
+            document.getElementById('findIdEmail').value = '';
+            document.getElementById('findIdCode').value = '';
+
+            document.querySelector('.find-pw-form').style.display = 'block';
+            document.getElementById('passwordReset').classList.remove('active');
+            document.getElementById('findPwId').value = '';
+            document.getElementById('findPwEmail').value = '';
+            document.getElementById('findPwCode').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@
     <style>
         :root {
             --primary: #01B18B;
+            --primary-dark: #018a6c;
             --lime: rgba(228, 254, 243, 0.8);
             --green-light: #EDF6E8;
             --black: #222222;
@@ -53,6 +54,7 @@
         .mobile-nav-utils svg { width: 20px; height: 20px; }
         body.menu-open { overflow: hidden; }
         .main-content { padding-top: 70px; }
+
         /* Breadcrumb */
         .breadcrumb { padding: 20px 0; background: var(--white); }
         .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 12px; }
@@ -60,45 +62,64 @@
         .breadcrumb-home:hover { opacity: 0.8; }
         .breadcrumb-divider { color: var(--gray-border); font-size: 14px; }
         .breadcrumb-current { font-size: 14px; color: var(--gray-light); }
+
         /* Page Header */
         .page-header { background: var(--white); padding: 20px 40px 20px; text-align: center; }
         .page-header-inner { max-width: 1200px; margin: 0 auto; }
         .page-title { font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 40px; }
+
         /* Sub Navigation Tabs */
         .sub-nav-tabs { display: flex; gap: 0; width: 100%; max-width: 1120px; margin: 0 auto; background: #F7FAF4; border-radius: 50px; padding: 4px; }
-        .tab-item { flex: 1; padding: 12px 8px; font-size: 15px; font-weight: 500; color: var(--gray-light); text-decoration: none; border: none; transition: all 0.2s; background: transparent; text-align: center; border-radius: 50px; }
+        .tab-item { flex: 1; padding: 12px 8px; font-size: 15px; font-weight: 500; color: var(--gray-light); text-decoration: none; border: none; transition: all 0.2s; background: transparent; text-align: center; border-radius: 50px; cursor: pointer; }
         .tab-item:hover { color: var(--primary); }
         .tab-item.active { color: var(--white); background: var(--primary); }
+
+        /* Content Section */
         .content-section { max-width: 1200px; margin: 0 auto; padding: 20px 40px 100px; }
         .section-hidden { display: none; }
 
-        /* 썸네일 갤러리 스타일 */
+        /* Board Section */
+        .board-section { padding: 20px 0; }
+        .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .board-total { font-size: 14px; color: var(--gray); }
+        .board-total strong { color: var(--primary); font-weight: 700; }
+        .board-search { display: flex; gap: 8px; }
+        .board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        .board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
+        .board-search button { padding: 10px 20px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+
+        .board-list { border-top: 2px solid var(--primary); }
+        .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
+        .board-item:hover { background: #FAFAFA; }
+        .board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+        .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .board-title:hover { color: var(--primary); }
+        .board-date { width: 100px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
+
+        .board-pagination { display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 40px; }
+        .board-pagination a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray); text-decoration: none; transition: all 0.2s; }
+        .board-pagination a:hover { border-color: var(--primary); color: var(--primary); }
+        .board-pagination a.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+        .board-pagination a.arrow { font-size: 12px; }
+
+        /* Gallery Section */
         .gallery-section { padding: 20px 0; }
         .gallery-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .gallery-total { font-size: 14px; color: var(--gray); }
         .gallery-total strong { color: var(--primary); font-weight: 700; }
-        .gallery-filter { display: flex; gap: 8px; }
-        .gallery-filter button { padding: 8px 16px; border: 1px solid var(--gray-border); background: var(--white); border-radius: 20px; font-size: 14px; color: var(--gray); cursor: pointer; transition: all 0.2s; }
-        .gallery-filter button:hover, .gallery-filter button.active { border-color: var(--primary); background: var(--primary); color: var(--white); }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
         .gallery-item { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06); transition: transform 0.2s, box-shadow 0.2s; }
         .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
+        .gallery-item > a { display: block; text-decoration: none; color: inherit; }
         .gallery-thumb { width: 100%; aspect-ratio: 4/3; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--gray-light); font-size: 14px; overflow: hidden; }
         .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-info { padding: 20px; }
-        .gallery-category { display: inline-block; padding: 4px 10px; background: var(--green-light); color: var(--primary); font-size: 11px; font-weight: 600; border-radius: 4px; margin-bottom: 10px; }
         .gallery-title { font-size: 16px; font-weight: 600; color: var(--black); margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .gallery-title a { text-decoration: none; color: inherit; }
-        .gallery-title a:hover { color: var(--primary); }
+        .gallery-item:hover .gallery-title { color: var(--primary); }
         .gallery-meta { display: flex; gap: 12px; font-size: 12px; color: var(--gray-light); }
 
-        .gallery-pagination { display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 50px; }
-        .gallery-pagination a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray); text-decoration: none; transition: all 0.2s; }
-        .gallery-pagination a:hover { border-color: var(--primary); color: var(--primary); }
-        .gallery-pagination a.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
-        .gallery-pagination a.arrow { font-size: 12px; }
-
+        /* Footer */
         .footer { background: var(--gray-dark); padding: 50px 40px; }
         .footer-inner { max-width: 1200px; margin: 0 auto; }
         .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
@@ -124,21 +145,28 @@
             .mobile-nav { display: block; }
             .footer-nav { display: none; }
             .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+            .board-search { flex-wrap: wrap; }
+            .board-search input { width: 100%; }
         }
         @media (max-width: 768px) {
             .breadcrumb { padding: 12px 16px; }
-            .breadcrumb-inner { gap: 10px; }
+            .breadcrumb-inner { gap: 10px; padding: 0 20px; }
             .breadcrumb-current { font-size: 13px; }
             .page-header { padding: 30px 16px 30px; }
             .page-title { font-size: 26px; margin-bottom: 30px; }
             .sub-nav-tabs { gap: 0; flex-wrap: wrap; }
-            .tab-item { flex: 1 1 calc(33.333%); min-width: calc(33.333%); padding: 10px 4px; font-size: 12px; border-radius: 0; }
-            .tab-item:first-child { border-radius: 8px 0 0 0; }
-            .tab-item:nth-child(3) { border-radius: 0 8px 0 0; }
-            .tab-item:nth-child(4) { border-radius: 0 0 0 8px; }
-            .tab-item:last-child { border-radius: 0 0 8px 0; }
-            .tab-item:nth-child(n+4) { margin-top: -1px; }
+            .tab-item { flex: 1 1 50%; min-width: 50%; padding: 10px 4px; font-size: 13px; border-radius: 0; }
+            .tab-item:first-child { border-radius: 25px 0 0 25px; }
+            .tab-item:last-child { border-radius: 0 25px 25px 0; }
             .content-section { padding: 20px 20px 60px; }
+            .board-search { flex-wrap: nowrap; gap: 6px; }
+            .board-search select { padding: 8px 10px; font-size: 13px; flex-shrink: 0; }
+            .board-search input { flex: 1; min-width: 0; padding: 8px 10px; font-size: 13px; }
+            .board-search button { padding: 8px 14px; font-size: 13px; flex-shrink: 0; }
+            .board-item { flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+            .board-num { display: none; }
+            .board-title { width: 100%; order: 1; font-size: 15px; }
+            .board-date { width: auto; order: 2; font-size: 12px; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .gallery-header { flex-direction: column; gap: 16px; align-items: flex-start; }
         }
@@ -180,16 +208,14 @@
                     <a href="news.html">재단소식</a>
                     <div class="sub-menu">
                         <a href="news.html#notice">공지사항</a>
-                        <a href="news.html#news">재단 뉴스</a>
                         <a href="news.html#disclosure">공익법인공시</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="resources.html" class="active">자료실</a>
                     <div class="sub-menu">
-                        <a href="resources.html#photo">포토갤러리</a>
-                        <a href="resources.html#downloads">서식자료실</a>
-                        
+                        <a href="resources.html#gallery">갤러리</a>
+                        <a href="resources.html#downloads">서식 자료실</a>
                     </div>
                 </div>
                 <div class="nav-item">
@@ -198,7 +224,6 @@
             </nav>
             <div class="header-utils">
                 <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg></a>
             </div>
             <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
         </div>
@@ -212,10 +237,10 @@
         <a href="javascript:void(0)">커뮤니티 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;vertical-align:-3px;margin-left:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></a>
         <div class="mobile-nav-utils">
             <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>로그인</a>
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg>ENG</a>
         </div>
     </nav>
     <main class="main-content">
+        <!-- Breadcrumb -->
         <div class="breadcrumb">
             <div class="breadcrumb-inner">
                 <a href="index.html" class="breadcrumb-home">
@@ -228,145 +253,178 @@
                 <span class="breadcrumb-current">자료실</span>
             </div>
         </div>
+
+        <!-- Page Header -->
         <div class="page-header">
             <div class="page-header-inner">
                 <h1 class="page-title">자료실</h1>
                 <div class="sub-nav-tabs">
-                    <a href="#photo" class="tab-item active">포토갤러리</a>
-                    <a href="#downloads" class="tab-item">서식자료실</a>
+                    <button class="tab-item active" data-target="gallery">갤러리</button>
+                    <button class="tab-item" data-target="downloads">서식 자료실</button>
                 </div>
             </div>
         </div>
-        <div class="content-section">
-            <section id="photo" class="gallery-section">
+
+        <!-- Gallery Section -->
+        <div class="content-section" id="gallery">
+            <div class="gallery-section">
                 <div class="gallery-header">
                     <div class="gallery-total">총 <strong>86</strong>건</div>
-                    <div class="gallery-filter">
-                        <button class="active">전체</button>
-                        <button>장학사업</button>
-                        <button>학술지원</button>
-                        <button>청소년</button>
-                        <button>체육</button>
-                    </div>
                 </div>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">장학사업</span>
-                            <h3 class="gallery-title"><a href="#">2024년 장학증서 수여식</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.12.15</span>
-                                <span>조회 234</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">2024년 장학증서 수여식</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.12.15</span>
+                                    <span>조회 234</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">청소년</span>
-                            <h3 class="gallery-title"><a href="#">청소년 리더십 캠프 현장</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.12.10</span>
-                                <span>조회 178</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">청소년 리더십 캠프 현장</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.12.10</span>
+                                    <span>조회 178</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">학술지원</span>
-                            <h3 class="gallery-title"><a href="#">학술연구 발표회</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.11.28</span>
-                                <span>조회 145</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">학술연구 발표회</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.11.28</span>
+                                    <span>조회 145</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">체육</span>
-                            <h3 class="gallery-title"><a href="#">체육인재 격려금 전달식</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.11.20</span>
-                                <span>조회 198</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">체육인재 격려금 전달식</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.11.20</span>
+                                    <span>조회 198</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">장학사업</span>
-                            <h3 class="gallery-title"><a href="#">장학생 멘토링 프로그램</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.11.15</span>
-                                <span>조회 167</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">장학생 멘토링 프로그램</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.11.15</span>
+                                    <span>조회 167</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">청소년</span>
-                            <h3 class="gallery-title"><a href="#">진로탐색 워크숍</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.11.08</span>
-                                <span>조회 123</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">진로탐색 워크숍</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.11.08</span>
+                                    <span>조회 123</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">장학사업</span>
-                            <h3 class="gallery-title"><a href="#">2024 하반기 장학생 오리엔테이션</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.10.25</span>
-                                <span>조회 201</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">2024 하반기 장학생 오리엔테이션</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.10.25</span>
+                                    <span>조회 201</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-thumb">썸네일 이미지</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">학술지원</span>
-                            <h3 class="gallery-title"><a href="#">연구지원금 전달식</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.10.18</span>
-                                <span>조회 156</span>
+                        <a href="gallery-detail.html">
+                            <div class="gallery-thumb">썸네일 이미지</div>
+                            <div class="gallery-info">
+                                <h3 class="gallery-title">연구지원금 전달식</h3>
+                                <div class="gallery-meta">
+                                    <span>2024.10.18</span>
+                                    <span>조회 156</span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
-                <div class="gallery-pagination">
+                <div class="board-pagination">
                     <a href="#" class="arrow">‹</a>
                     <a href="#" class="active">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
                     <a href="#" class="arrow">›</a>
                 </div>
-            </section>
-            <section id="downloads" class="gallery-section section-hidden">
-                <div class="gallery-header">
-                    <div class="gallery-total">총 <strong>15</strong>건</div>
-                </div>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <div class="gallery-thumb">파일 아이콘</div>
-                        <div class="gallery-info">
-                            <span class="gallery-category">서식</span>
-                            <h3 class="gallery-title"><a href="#">장학금 신청서 양식</a></h3>
-                            <div class="gallery-meta">
-                                <span>2024.12.01</span>
-                                <span>다운로드 328</span>
-                            </div>
-                        </div>
+            </div>
+        </div>
+
+        <!-- Downloads Section (서식 자료실) -->
+        <div class="content-section section-hidden" id="downloads">
+            <div class="board-section">
+                <div class="board-header">
+                    <div class="board-total">총 <strong>24</strong>건</div>
+                    <div class="board-search">
+                        <select>
+                            <option>구분</option>
+                            <option>전체</option>
+                            <option>장학금</option>
+                            <option>신청서</option>
+                        </select>
+                        <input type="text" placeholder="검색어를 입력하세요">
+                        <button>검색</button>
                     </div>
                 </div>
-            </section>
+                <div class="board-list">
+                    <div class="board-item">
+                        <span class="board-num">1</span>
+                        <a href="#" class="board-title">장학금 신청 서류</a>
+                        <span class="board-date">2025.01.15</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">2</span>
+                        <a href="#" class="board-title">장학금 신청 서류</a>
+                        <span class="board-date">2025.01.11</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">3</span>
+                        <a href="#" class="board-title">장학금 신청 서류</a>
+                        <span class="board-date">2025.01.10</span>
+                    </div>
+                    <div class="board-item">
+                        <span class="board-num">4</span>
+                        <a href="#" class="board-title">장학금 신청 서류</a>
+                        <span class="board-date">2024.12.25</span>
+                    </div>
+                </div>
+                <div class="board-pagination">
+                    <a href="#" class="arrow">‹</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#" class="arrow">›</a>
+                </div>
+            </div>
         </div>
     </main>
     <footer class="footer">
@@ -377,7 +435,7 @@
                     <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html#intro">재단 소개</a><a href="about.html#history">연혁</a><a href="about.html#organization">조직도</a><a href="about.html#location">오시는 길</a></div>
                     <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a><a href="programs.html#youth">청소년육성지원사업</a></div>
                     <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a><a href="scholarship.html#faq">자주 묻는 질문</a></div>
-                    <div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#news">재단 뉴스</a><a href="news.html#disclosure">공익법인공시</a></div>
+                    <div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#disclosure">공익법인공시</a></div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -391,23 +449,29 @@
         </div>
     </footer>
     <script>
-        document.querySelectorAll('.tab-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.tab-nav a').forEach(a => a.classList.remove('active'));
+        // Tab Navigation
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active from all tabs
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                // Add active to clicked tab
                 this.classList.add('active');
-                const targetId = this.getAttribute('href').substring(1);
-                document.querySelectorAll('.content-section > section').forEach(section => section.classList.add('section-hidden'));
+
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.add('section-hidden');
+                });
+
+                // Show target section
+                const targetId = this.getAttribute('data-target');
                 const targetSection = document.getElementById(targetId);
-                if (targetSection) targetSection.classList.remove('section-hidden');
+                if (targetSection) {
+                    targetSection.classList.remove('section-hidden');
+                }
             });
         });
-        document.querySelectorAll('.gallery-filter button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.gallery-filter button').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+
+        // Mobile Navigation
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
         hamburger.addEventListener('click', function() {
@@ -429,6 +493,23 @@
                 document.body.classList.remove('menu-open');
             }
         });
+
+        // Handle hash navigation
+        function handleHash() {
+            const hash = window.location.hash.substring(1);
+            if (hash === 'gallery' || hash === 'downloads') {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.add('section-hidden'));
+
+                const targetTab = document.querySelector(`.tab-item[data-target="${hash}"]`);
+                const targetSection = document.getElementById(hash);
+
+                if (targetTab) targetTab.classList.add('active');
+                if (targetSection) targetSection.classList.remove('section-hidden');
+            }
+        }
+        window.addEventListener('hashchange', handleHash);
+        handleHash();
     </script>
 </body>
 </html>

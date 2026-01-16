@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 현송교육문화재단</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01B18B;
+            --primary-dark: #018a6c;
+            --lime: rgba(228, 254, 243, 0.8);
+            --green-light: #EDF6E8;
+            --black: #222222;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --gray-light: #999999;
+            --gray-pale: #CCCCCC;
+            --gray-border: #E5E5E5;
+            --bg: #F5F5F5;
+            --bg-header: #D9D9D9;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); line-height: 1.6; background: var(--white); }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: var(--white); z-index: 1000; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .main-nav { display: flex; gap: 50px; }
+        .main-nav > .nav-item { position: relative; }
+        .main-nav > .nav-item > a { text-decoration: none; color: var(--black); font-size: 16px; font-weight: 500; position: relative; transition: color 0.2s; display: block; padding: 10px 0; }
+        .main-nav > .nav-item > a:hover, .main-nav > .nav-item > a.active { color: var(--primary); }
+        .main-nav > .nav-item > a.active::after { content: ''; position: absolute; top: 6px; right: -6px; width: 6px; height: 6px; background: #01B18B; border-radius: 50%; }
+        .sub-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 12px; padding: 12px 0; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; }
+        .nav-item:hover .sub-menu { opacity: 1; visibility: visible; }
+        .sub-menu a { display: block; padding: 10px 20px; font-size: 14px; color: var(--gray-dark); text-decoration: none; transition: all 0.2s; }
+        .sub-menu a:hover { background: var(--green-light); color: var(--primary); }
+        .header-utils { display: flex; align-items: center; gap: 12px; }
+        .header-utils a { color: var(--black); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+        .header-utils svg { width: 22px; height: 22px; }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 0; z-index: 1001; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger span:nth-child(1) { margin-bottom: 6px; }
+        .hamburger span:nth-child(3) { margin-top: 6px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--white); z-index: 999; padding: 40px 20px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { display: block; padding: 14px 0; font-size: 15px; font-weight: 500; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-border); transition: color 0.2s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--primary); }
+        .mobile-nav-utils { display: flex; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--gray-border); }
+        .mobile-nav-utils a { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 15px; color: var(--gray); border-bottom: none; }
+        .mobile-nav-utils svg { width: 20px; height: 20px; }
+        body.menu-open { overflow: hidden; }
+        .main-content { padding-top: 70px; }
+
+        /* Page Header - Gray Background */
+        .page-header {
+            background: var(--bg-header);
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            width: 100%;
+        }
+        .tab-item {
+            flex: 1;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: #F0F0F0;
+            color: var(--gray);
+        }
+        .tab-item:hover {
+            background: #E5E5E5;
+            color: var(--gray-dark);
+        }
+        .tab-item.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 40px 100px;
+        }
+        .section-hidden {
+            display: none;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--black);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+        .data-table thead {
+            background: var(--primary);
+        }
+        .data-table th {
+            padding: 16px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            border: 1px solid var(--primary);
+        }
+        .data-table td {
+            padding: 16px 12px;
+            font-size: 14px;
+            color: var(--gray-dark);
+            border: 1px solid var(--gray-border);
+            text-align: center;
+            vertical-align: middle;
+        }
+        .data-table tbody tr {
+            transition: background 0.2s;
+        }
+        .data-table tbody tr:hover {
+            background: var(--bg);
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .action-btn.view {
+            background: var(--primary);
+            color: var(--white);
+            border: 1px solid var(--primary);
+        }
+        .action-btn.view:hover {
+            background: var(--primary-dark);
+        }
+        .action-btn.edit {
+            background: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        .action-btn.edit:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Personal Info Section */
+        .info-section {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .info-section-header {
+            background: #C0C0C0;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--black);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .info-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 40px;
+            padding: 0 20px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-label {
+            min-width: 110px;
+            padding: 12px 20px;
+            background: #E8E8E8;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-dark);
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .info-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-border);
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+        .info-input:focus {
+            border-color: var(--primary);
+        }
+        .password-hint {
+            grid-column: 1;
+            font-size: 13px;
+            color: var(--primary);
+            margin-top: -10px;
+            padding-left: 130px;
+        }
+
+        /* Save Button */
+        .save-btn {
+            display: block;
+            width: 200px;
+            margin: 40px auto 0;
+            padding: 14px 40px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .save-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        .footer { background: var(--gray-dark); padding: 50px 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .footer-logo { font-size: 16px; font-weight: 700; color: var(--white); }
+        .footer-nav { display: flex; gap: 60px; }
+        .footer-nav-group h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+        .footer-nav-group a { display: block; font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; }
+        .footer-nav-group a:hover { color: var(--white); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-info { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copyright { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright p { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .family-site { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 10px 16px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+
+        @media (max-width: 1024px) {
+            .header-inner { padding: 0 20px; }
+            .main-nav { display: none; }
+            .header-utils { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: block; }
+            .footer-nav { display: none; }
+            .data-table { font-size: 13px; }
+            .data-table th, .data-table td { padding: 12px 8px; }
+        }
+        @media (max-width: 768px) {
+            .page-header { padding: 40px 20px; }
+            .page-title { font-size: 24px; }
+            .tab-item { padding: 16px 12px; font-size: 15px; }
+            .content-section { padding: 30px 20px 60px; }
+            .section-title { font-size: 22px; }
+            .data-table-wrapper { overflow-x: auto; }
+            .data-table { min-width: 800px; }
+            .info-form { grid-template-columns: 1fr; gap: 16px; }
+            .info-row { flex-direction: column; align-items: stretch; gap: 8px; }
+            .info-label { width: 100%; min-width: auto; }
+            .password-hint { padding-left: 0; grid-column: 1; }
+            .action-btns { flex-direction: column; }
+            .action-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/sykim1017/hyunsong/blob/main/logo_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%A9%E1%86%BC%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%92%E1%85%AA%E1%84%8C%E1%85%A2%E1%84%83%E1%85%A1%E1%86%AB.png?raw=true" alt="현송교육문화재단" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <div class="nav-item">
+                    <a href="about.html">재단소개</a>
+                    <div class="sub-menu">
+                        <a href="about.html#intro">재단 소개</a>
+                        <a href="about.html#history">연혁</a>
+                        <a href="about.html#organization">조직도</a>
+                        <a href="about.html#location">오시는 길</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="programs.html">사업소개</a>
+                    <div class="sub-menu">
+                        <a href="programs.html#scholarship">장학사업</a>
+                        <a href="programs.html#research">학술연구지원사업</a>
+                        <a href="programs.html#youth">청소년육성지원사업</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="scholarship.html">장학생 선발</a>
+                    <div class="sub-menu">
+                        <a href="scholarship.html#notice">선발 공지</a>
+                        <a href="scholarship.html#documents">신청 서류</a>
+                        <a href="scholarship.html#faq">자주 묻는 질문</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="news.html">재단소식</a>
+                    <div class="sub-menu">
+                        <a href="news.html#notice">공지사항</a>
+                        <a href="news.html#news">재단 뉴스</a>
+                        <a href="news.html#disclosure">공익법인공시</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="resources.html">자료실</a>
+                    <div class="sub-menu">
+                        <a href="resources.html#gallery">갤러리</a>
+                        <a href="resources.html#downloads">서식 자료실</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-utils">
+                <a href="mypage.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">재단소개</a>
+        <a href="programs.html">사업소개</a>
+        <a href="scholarship.html">장학생 선발</a>
+        <a href="news.html">재단소식</a>
+        <a href="resources.html">자료실</a>
+        <div class="mobile-nav-utils">
+            <a href="mypage.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>마이페이지</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">마이페이지</h1>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-item active" data-target="applications">신청 내역 관리</button>
+            <button class="tab-item" data-target="profile">개인 정보 관리</button>
+        </div>
+
+        <!-- 신청 내역 관리 Section -->
+        <div class="content-section" id="applications">
+            <h2 class="section-title">신청 내역 관리</h2>
+
+            <div class="data-table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">NO.</th>
+                            <th style="width: 120px;">분류</th>
+                            <th style="width: 80px;">신청인</th>
+                            <th>제목</th>
+                            <th style="width: 140px;">모집 일정</th>
+                            <th style="width: 110px;">접수 일자</th>
+                            <th style="width: 180px;">상세보기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>장학사업</td>
+                            <td>홍길동</td>
+                            <td>장학사업 장학생 선발 공지합니다.</td>
+                            <td>2025-10-15~<br>2025-11-16</td>
+                            <td>2025-10-15</td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="scholarship-detail.html" class="action-btn view">상세보기</a>
+                                    <a href="scholarship-apply.html" class="action-btn edit">수정하기</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>청소년 육성<br>지원사업</td>
+                            <td>홍길순</td>
+                            <td>청소년 육성 지원사업 장학생 선발 공지합니다.</td>
+                            <td>2025-10-11~<br>2025-11-30</td>
+                            <td>2025-10-11</td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="scholarship-detail.html" class="action-btn view">상세보기</a>
+                                    <a href="scholarship-apply.html" class="action-btn edit">수정하기</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 개인 정보 관리 Section -->
+        <div class="content-section section-hidden" id="profile">
+            <h2 class="section-title">개인 정보 관리</h2>
+
+            <div class="info-section">
+                <!-- 인적사항 헤더 -->
+                <div class="info-section-header">인적사항</div>
+
+                <!-- 폼 그리드 -->
+                <div class="info-form">
+                    <!-- 왼쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">아이디</span>
+                        <input type="text" class="info-input" value="souelUniversity" id="userId">
+                    </div>
+                    <!-- 오른쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">학교 명</span>
+                        <input type="text" class="info-input" value="서울대학교" id="userSchool">
+                    </div>
+
+                    <!-- 왼쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">비밀번호</span>
+                        <input type="password" class="info-input" value="" placeholder="새 비밀번호" id="newPw">
+                    </div>
+                    <!-- 오른쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">비밀번호<br>재확인</span>
+                        <input type="password" class="info-input" value="" placeholder="비밀번호 재확인" id="confirmPw">
+                    </div>
+
+                    <!-- 비밀번호 안내 -->
+                    <p class="password-hint">* 6자이상 영문과 숫자를 반드시 포함해야 합니다.</p>
+                    <div></div>
+
+                    <!-- 왼쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">연락처</span>
+                        <input type="tel" class="info-input" value="010-1234-5678" id="userPhone">
+                    </div>
+                    <!-- 오른쪽 열 -->
+                    <div class="info-row">
+                        <span class="info-label">이메일</span>
+                        <input type="email" class="info-input" value="email@naver.com" id="userEmail">
+                    </div>
+                </div>
+
+                <button class="save-btn" onclick="saveChanges()">저장</button>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-logo">현송교육문화재단</div>
+                <div class="footer-nav">
+                    <div class="footer-nav-group"><h4>재단소개</h4><a href="about.html#intro">재단 소개</a><a href="about.html#history">연혁</a><a href="about.html#organization">조직도</a><a href="about.html#location">오시는 길</a></div>
+                    <div class="footer-nav-group"><h4>사업소개</h4><a href="programs.html#scholarship">장학사업</a><a href="programs.html#research">학술연구지원사업</a><a href="programs.html#youth">청소년육성지원사업</a></div>
+                    <div class="footer-nav-group"><h4>장학생 선발</h4><a href="scholarship.html#notice">선발 공지</a><a href="scholarship.html#documents">신청 서류</a><a href="scholarship.html#faq">자주 묻는 질문</a></div>
+                    <div class="footer-nav-group"><h4>재단소식</h4><a href="news.html#notice">공지사항</a><a href="news.html#news">재단 뉴스</a><a href="news.html#disclosure">공익법인공시</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">서울 구로구 경인로 661, 101동 1201~1203호 (우)08208|TEL : 02-2612-7150, 7140</div>
+                <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 HYUNSONG EDUCATIONAL & CULTURAL FOUNDATION. ALL RIGHTS RESERVED.</p>
+                <button class="family-site">패밀리사이트 →</button>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active from all tabs
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                // Add active to clicked tab
+                this.classList.add('active');
+
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.add('section-hidden');
+                });
+
+                // Show target section
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.remove('section-hidden');
+                }
+            });
+        });
+
+        // Save changes
+        function saveChanges() {
+            const newPw = document.getElementById('newPw').value;
+            const confirmPw = document.getElementById('confirmPw').value;
+
+            // If password fields are filled, validate
+            if (newPw || confirmPw) {
+                if (newPw !== confirmPw) {
+                    alert('비밀번호가 일치하지 않습니다.');
+                    return;
+                }
+                if (newPw.length < 6) {
+                    alert('비밀번호는 6자 이상이어야 합니다.');
+                    return;
+                }
+                // Check for letters and numbers
+                const hasLetter = /[a-zA-Z]/.test(newPw);
+                const hasNumber = /[0-9]/.test(newPw);
+                if (!hasLetter || !hasNumber) {
+                    alert('비밀번호는 영문과 숫자를 반드시 포함해야 합니다.');
+                    return;
+                }
+            }
+
+            alert('정보가 저장되었습니다.');
+        }
+
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+
+        // Handle hash navigation
+        function handleHash() {
+            const hash = window.location.hash.substring(1);
+            if (hash === 'applications' || hash === 'profile') {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.add('section-hidden'));
+
+                const targetTab = document.querySelector(`.tab-item[data-target="${hash}"]`);
+                const targetSection = document.getElementById(hash);
+
+                if (targetTab) targetTab.classList.add('active');
+                if (targetSection) targetSection.classList.remove('section-hidden');
+            }
+        }
+        window.addEventListener('hashchange', handleHash);
+        handleHash();
+    </script>
+</body>
+</html>
