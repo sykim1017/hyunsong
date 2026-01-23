@@ -177,6 +177,71 @@
     margin-top: 20px;
 }
 
+/* Quote Box - New Design (설립취지문) */
+.quote-box-new {
+    background: linear-gradient(to right, #90cee2, #ebf6eb);
+    border-radius: 40px;
+    padding: 30px 60px;
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.quote-box-new .ceo-image {
+    flex-shrink: 0;
+    width: 300px;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-box-new .ceo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.quote-box-new .quote-content {
+    flex: 1;
+}
+
+.quote-box-new .quote-text {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #3e3a39;
+    line-height: 1.8;
+    letter-spacing: -0.44px;
+    font-style: normal;
+    margin-bottom: 16px;
+}
+
+.quote-box-new .quote-source {
+    font-size: 16px;
+    color: #727685;
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .quote-box-new {
+        flex-direction: column;
+        padding: 30px;
+        gap: 30px;
+        border-radius: 24px;
+    }
+
+    .quote-box-new .ceo-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .quote-box-new .quote-text {
+        font-size: 16px;
+    }
+}
+
 /* Founder History */
 .founder-history {
     margin-top: 60px;
