@@ -63,7 +63,7 @@
     width: 100%;
     max-width: 1120px;
     margin: 0 auto;
-    background: #F7FAF4;
+    background: #F2F3F8;
     border-radius: 50px;
     padding: 4px;
 }
@@ -83,12 +83,12 @@
 }
 
 .tab-item:hover {
-    color: var(--primary);
+    color: #17A6ED;
 }
 
 .tab-item.active {
     color: var(--white);
-    background: var(--primary);
+    background: #17A6ED;
 }
 
 /* Section */
