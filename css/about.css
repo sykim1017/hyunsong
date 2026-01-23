@@ -192,15 +192,6 @@
     overflow: hidden;
 }
 
-.quote-box-new::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, #dcede6 17%, #004185 100%);
-    mix-blend-mode: hard-light;
-    border-radius: 40px;
-    pointer-events: none;
-}
 
 .quote-box-new .ceo-image {
     flex-shrink: 0;
