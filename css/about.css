@@ -88,7 +88,7 @@
 
 .tab-item.active {
     color: var(--white);
-    background: #17A6ED;
+    background: #1F2657;
 }
 
 /* Section */
@@ -1198,7 +1198,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #17A6ED;
+    background: #1F2657;
     color: var(--white);
     font-size: 12px;
     font-weight: 600;
