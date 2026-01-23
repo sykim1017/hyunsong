@@ -179,15 +179,27 @@
 
 /* Quote Box - New Design (설립취지문) */
 .quote-box-new {
+    position: relative;
     background: url('/hyunsong/publish/ceo-background-box.png') no-repeat center center;
     background-size: 100% 100%;
     border-radius: 40px;
-    padding: 40px 80px;
+    padding: 40px 40px;
     margin: 40px 0;
     display: flex;
     align-items: center;
     gap: 80px;
     min-height: 320px;
+    overflow: hidden;
+}
+
+.quote-box-new::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #dcede6 17%, #004185 100%);
+    mix-blend-mode: hard-light;
+    border-radius: 40px;
+    pointer-events: none;
 }
 
 .quote-box-new .ceo-image {
@@ -196,6 +208,7 @@
     height: 300px;
     position: relative;
     overflow: visible;
+    z-index: 1;
 }
 
 .quote-box-new .ceo-image img {
@@ -207,17 +220,21 @@
 
 .quote-box-new .quote-content {
     flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .quote-box-new .quote-text {
     font-family: 'Pretendard', sans-serif;
-    font-size: 22px;
+    font-size: 20pt;
     font-weight: 500;
     color: #ffffff;
     line-height: 1.8;
     letter-spacing: -0.44px;
     font-style: normal;
     margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
 }
 
 .quote-box-new .quote-source {
