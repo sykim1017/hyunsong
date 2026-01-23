@@ -182,19 +182,20 @@
     background: url('/hyunsong/publish/ceo-background-box.png') no-repeat center center;
     background-size: 100% 100%;
     border-radius: 40px;
-    padding: 30px 60px;
+    padding: 40px 80px;
     margin: 40px 0;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 80px;
+    min-height: 320px;
 }
 
 .quote-box-new .ceo-image {
     flex-shrink: 0;
-    width: 300px;
-    height: 280px;
+    width: 350px;
+    height: 300px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .quote-box-new .ceo-image img {
@@ -210,9 +211,9 @@
 
 .quote-box-new .quote-text {
     font-family: 'Pretendard', sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
-    color: #3e3a39;
+    color: #ffffff;
     line-height: 1.8;
     letter-spacing: -0.44px;
     font-style: normal;
@@ -220,26 +221,33 @@
 }
 
 .quote-box-new .quote-source {
-    font-size: 16px;
-    color: #727685;
+    font-size: 18px;
+    color: #ececec;
     margin-top: 16px;
 }
 
 @media (max-width: 768px) {
     .quote-box-new {
         flex-direction: column;
-        padding: 30px;
-        gap: 30px;
+        padding: 30px 20px;
+        gap: 20px;
         border-radius: 24px;
+        min-height: auto;
     }
 
     .quote-box-new .ceo-image {
-        width: 200px;
+        width: 220px;
         height: 200px;
     }
 
     .quote-box-new .quote-text {
         font-size: 16px;
+        text-align: center;
+    }
+
+    .quote-box-new .quote-source {
+        font-size: 14px;
+        text-align: center;
     }
 }
 
