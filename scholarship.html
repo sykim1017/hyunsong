@@ -414,18 +414,21 @@
         .notice-board-search { display: flex; gap: 8px; }
         .notice-board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
         .notice-board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
-        .notice-board-search button { padding: 10px 20px; background: #17A6ED; color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .notice-board-search button { padding: 10px 20px; background: #1F2657; color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
         .notice-board-list { border-top: 2px solid var(--primary); padding: 0 14px; }
         .notice-board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
         .notice-board-apply { flex-shrink: 0; margin-left: 20px; }
         .notice-board-item:hover { background: #FAFAFA; }
         .notice-board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
-        .notice-board-category { padding: 4px 12px; background: var(--green-light); color: #17A6ED; font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; min-width: 80px; }
+        .notice-board-category { padding: 4px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; min-width: 80px; }
+        .notice-board-category.univ { background: #E8F5E9; color: #2E7D32; }
+        .notice-board-category.high { background: #FFF8E1; color: #F9A825; }
+        .notice-board-category.grad { background: #FFF3E0; color: #EF6C00; }
         .notice-board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
         .notice-board-title:hover { color: #17A6ED; }
         .notice-board-period { width: 180px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
         .notice-board-views { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
-        .apply-btn { display: inline-block; padding: 10px 20px; background: #17A6ED; color: var(--white); border-radius: 30px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+        .apply-btn { display: inline-block; padding: 10px 20px; background: #01B18B; color: var(--white); border-radius: 30px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
         .apply-btn:hover { background: #019a79; }
 
         .footer { background: var(--gray-dark); padding: 50px 40px; }
@@ -607,7 +610,7 @@
                 <div class="notice-board-list">
                     <div class="notice-board-item">
                         <span class="notice-board-num">128</span>
-                        <span class="notice-board-category">대학</span>
+                        <span class="notice-board-category univ">대학</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 장학생 선발 공고</a>
                         <span class="notice-board-period">2025.01.02~2025.02.15</span>
                         <span class="notice-board-views">152</span>
@@ -615,7 +618,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">127</span>
-                        <span class="notice-board-category">대학원</span>
+                        <span class="notice-board-category grad">대학원</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 대학원 장학생 선발 공고</a>
                         <span class="notice-board-period">2025.01.02~2025.02.15</span>
                         <span class="notice-board-views">89</span>
@@ -623,7 +626,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">126</span>
-                        <span class="notice-board-category">고교</span>
+                        <span class="notice-board-category high">고교</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2025년 상반기 고교 장학생 선발 공고</a>
                         <span class="notice-board-period">2024.12.15~2025.01.15</span>
                         <span class="notice-board-views">234</span>
@@ -631,7 +634,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">125</span>
-                        <span class="notice-board-category">대학</span>
+                        <span class="notice-board-category univ">대학</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 대학 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.09.01~2024.09.30</span>
                         <span class="notice-board-views">312</span>
@@ -639,7 +642,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">124</span>
-                        <span class="notice-board-category">대학원</span>
+                        <span class="notice-board-category grad">대학원</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 대학원 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.09.01~2024.09.30</span>
                         <span class="notice-board-views">287</span>
@@ -647,7 +650,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">123</span>
-                        <span class="notice-board-category">고교</span>
+                        <span class="notice-board-category high">고교</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 하반기 고교 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.08.15~2024.09.15</span>
                         <span class="notice-board-views">198</span>
@@ -655,7 +658,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">122</span>
-                        <span class="notice-board-category">대학</span>
+                        <span class="notice-board-category univ">대학</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 장학금 지급 완료 안내</a>
                         <span class="notice-board-period">2024.06.01~2024.06.30</span>
                         <span class="notice-board-views">456</span>
@@ -663,7 +666,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">121</span>
-                        <span class="notice-board-category">대학</span>
+                        <span class="notice-board-category univ">대학</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 대학 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.03.01~2024.03.31</span>
                         <span class="notice-board-views">523</span>
@@ -671,7 +674,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">120</span>
-                        <span class="notice-board-category">대학원</span>
+                        <span class="notice-board-category grad">대학원</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 대학원 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.03.01~2024.03.31</span>
                         <span class="notice-board-views">412</span>
@@ -679,7 +682,7 @@
                     </div>
                     <div class="notice-board-item">
                         <span class="notice-board-num">119</span>
-                        <span class="notice-board-category">고교</span>
+                        <span class="notice-board-category high">고교</span>
                         <a href="scholarship-detail.html" class="notice-board-title">2024년 상반기 고교 장학생 선발 공지합니다.</a>
                         <span class="notice-board-period">2024.02.15~2024.03.15</span>
                         <span class="notice-board-views">378</span>
