@@ -332,6 +332,13 @@
     gap: 20px;
 }
 
+.greeting-image img {
+    width: 400px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
 .image-placeholder {
     background: var(--border);
     height: 400px;
