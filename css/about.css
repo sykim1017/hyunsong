@@ -312,6 +312,22 @@
 }
 
 /* Greeting Section */
+.greeting-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 60px;
+    align-items: start;
+}
+
+.greeting-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting-left .section-header {
+    margin-bottom: 30px;
+}
+
 .greeting-content {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -617,6 +633,11 @@
         font-size: 18px;
     }
 
+    .greeting-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
     .greeting-content {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -652,6 +673,7 @@
         font-size: 24px;
     }
 
+    .greeting-layout .greeting-image,
     .greeting-image {
         order: -1;
     }
