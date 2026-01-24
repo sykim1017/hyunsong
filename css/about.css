@@ -894,181 +894,247 @@
 .ci-content {
     display: flex;
     flex-direction: column;
-    gap: 60px;
-}
-
-.ci-box {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 50px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-}
-
-.ci-box-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 40px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--primary);
-    display: inline-block;
-}
-
-.ci-meaning-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-}
-
-.ci-meaning-item {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
 }
 
-.ci-meaning-icon {
-    width: 100%;
-    aspect-ratio: 1;
-    background: var(--bg-card);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-gray);
-    font-size: 14px;
-}
-
-.ci-meaning-label {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--primary);
-}
-
-.ci-meaning-text {
-    font-size: 15px;
-    color: var(--text-dark);
-    line-height: 1.8;
-}
-
-/* CI System */
-.ci-system-content {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-}
-
-.ci-logo-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+/* CI 섹션 카드 컨테이너 */
+.ci-section-card {
+    background: var(--white);
+    border-radius: 16px;
     padding: 40px;
-    background: var(--bg-card);
-    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-.ci-logo-placeholder {
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 3/1;
-    background: var(--border);
-    border-radius: 8px;
+.ci-section-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 20px;
+    letter-spacing: -0.44px;
+}
+
+/* CI 의미 레이아웃 */
+.ci-meaning-layout {
+    display: flex;
+    gap: 30px;
+}
+
+.ci-meaning-illustration {
+    width: 479px;
+    height: 548px;
+    background: #fcfcf8;
+    border-radius: 20px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 65px 90px;
+}
+
+.ci-meaning-icons {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--text-gray);
-    font-size: 14px;
+    gap: 35px;
+    margin-bottom: 40px;
 }
 
-.ci-logo-text {
+.ci-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ci-icon-item img {
+    height: 42px;
+}
+
+.ci-icon-item span {
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    letter-spacing: -0.28px;
+}
+
+.ci-plus-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.ci-meaning-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: auto;
+}
+
+.ci-meaning-logo > img {
+    width: 105px;
+    height: 86px;
+}
+
+.ci-meaning-logo-text {
     text-align: center;
 }
 
-.ci-logo-text .korean {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
+.ci-meaning-logo-text .korean {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 4px;
 }
 
-.ci-logo-text .english {
-    font-size: 14px;
-    color: var(--text-gray);
+.ci-meaning-logo-text .english {
+    font-size: 10px;
+    color: #888;
     letter-spacing: 1px;
 }
 
-.ci-colors {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/* CI 의미 텍스트 */
+.ci-meaning-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     gap: 30px;
 }
 
-.ci-color-item {
+.ci-meaning-item h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #3e8d91;
+    margin-bottom: 4px;
+    letter-spacing: -0.36px;
+    line-height: 1.8;
+}
+
+.ci-meaning-item p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #5e5e5e;
+    line-height: 1.8;
+    letter-spacing: -0.36px;
+}
+
+.ci-meaning-divider {
+    height: 1px;
+    background: #cbcbcb;
+}
+
+/* CI 시스템 */
+.ci-system-content {
     display: flex;
-    gap: 24px;
-    padding: 30px;
-    background: var(--bg-card);
-    border-radius: 12px;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.ci-logo-area {
+    width: 100%;
+    height: 312px;
+    background: #fdfdfd;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ci-logo-image {
+    max-width: 273px;
+    max-height: 171px;
+}
+
+/* CI 컬러 카드 */
+.ci-colors {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.ci-color-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    padding: 20px 30px;
+}
+
+.ci-color-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .ci-color-swatch {
-    width: 100px;
-    height: 100px;
-    border-radius: 12px;
+    width: 143px;
+    height: 143px;
+    border-radius: 10px;
     flex-shrink: 0;
 }
 
 .ci-color-swatch.green {
-    background: #00ae60;
+    background: #00a854;
 }
 
 .ci-color-swatch.gray {
-    background: #414042;
+    background: #404040;
 }
 
 .ci-color-info {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.ci-color-name {
+.ci-color-info h4 {
     font-size: 18px;
     font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 12px;
+    color: #000;
+    letter-spacing: -0.36px;
 }
 
 .ci-color-codes {
-    font-size: 13px;
-    color: var(--text-gray);
-    line-height: 1.8;
-    margin-bottom: 16px;
-    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #404040;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
 }
 
 .ci-color-desc {
-    font-size: 14px;
-    color: var(--text-dark);
-    line-height: 1.7;
+    background: #f5f8f2;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 13px;
+    color: #5e5e5e;
+    line-height: 1.8;
+    text-align: center;
+    letter-spacing: -0.26px;
+}
+
+/* CI 다운로드 버튼 */
+.ci-download-wrap {
+    text-align: center;
 }
 
 .ci-download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    background: var(--primary);
-    color: var(--white);
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+    display: inline-block;
+    padding: 11px 20px;
+    border: 1px solid #1f2657;
+    border-radius: 60px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #5e5e5e;
     text-decoration: none;
+    letter-spacing: -0.36px;
+    line-height: 1.8;
+    transition: all 0.2s;
 }
 
 .ci-download-btn:hover {
-    background: #153d31;
+    background: #1f2657;
+    color: #fff;
 }
 
 /* ========================================
@@ -1126,24 +1192,18 @@
 
 /* CI & Location Responsive - Tablet */
 @media (max-width: 1024px) {
-    .ci-meaning-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+    .ci-meaning-layout {
+        flex-direction: column;
     }
 
-    .ci-meaning-item {
-        flex-direction: row;
-        align-items: flex-start;
-    }
-
-    .ci-meaning-icon {
-        width: 120px;
-        aspect-ratio: 1;
-        flex-shrink: 0;
+    .ci-meaning-illustration {
+        width: 100%;
+        height: auto;
+        padding: 40px;
     }
 
     .ci-colors {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 
     .location-address {
@@ -1153,39 +1213,35 @@
 
 /* CI & Location Responsive - Mobile */
 @media (max-width: 768px) {
-    .ci-box {
-        padding: 30px 20px;
+    .ci-section-card {
+        padding: 24px 20px;
     }
 
-    .ci-box-title {
+    .ci-section-card h3 {
         font-size: 18px;
     }
 
-    .ci-meaning-item {
+    .ci-meaning-icons {
         flex-direction: column;
+        gap: 20px;
     }
 
-    .ci-meaning-icon {
-        width: 100%;
-        max-width: 200px;
-    }
-
-    .ci-meaning-label {
-        font-size: 16px;
-    }
-
-    .ci-meaning-text {
-        font-size: 14px;
-    }
-
-    .ci-color-item {
+    .ci-color-top {
         flex-direction: column;
-        padding: 20px;
+        align-items: flex-start;
     }
 
     .ci-color-swatch {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .ci-logo-area {
+        height: 200px;
+    }
+
+    .ci-logo-image {
+        max-width: 180px;
     }
 
     .map-placeholder {
