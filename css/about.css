@@ -1328,3 +1328,263 @@
         padding-left: 0;
     }
 }
+
+/* ========================================
+   철학·비전·미션 섹션 (NEW - 피그마 디자인)
+   ======================================== */
+
+/* 블록 컨테이너 */
+.vision-new-block {
+    margin-bottom: 60px;
+}
+
+/* 이미지 배너 */
+.vision-new-image {
+    position: relative;
+    height: 327px;
+    border-radius: 24px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding-left: 54px;
+}
+
+.vision-new-image.philosophy {
+    background-image: url('../publish/philosophy-img.png');
+}
+
+.vision-new-image.vision {
+    background-image: url('../publish/vision-img.png');
+}
+
+.vision-new-image.mission {
+    background-image: url('../publish/mission-img.png');
+}
+
+/* 인용문 */
+.vision-new-quote {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 2;
+    letter-spacing: -0.48px;
+}
+
+.vision-new-quote.philosophy {
+    color: #35454f;
+}
+
+.vision-new-quote.vision,
+.vision-new-quote.mission {
+    color: #3c452c;
+}
+
+.vision-new-quote p {
+    margin: 0;
+}
+
+/* 콘텐츠 영역 (2컬럼 레이아웃) */
+.vision-new-content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+    align-items: flex-start;
+    margin-top: 50px;
+}
+
+/* 섹션 제목 */
+.vision-new-title {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #3e8d91;
+    line-height: 1.3;
+    letter-spacing: -0.8px;
+    margin: 0;
+}
+
+.vision-new-title span {
+    color: #3e8d91;
+}
+
+/* 설명 텍스트 */
+.vision-new-desc {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #5e5e5e;
+    line-height: 1.8;
+    letter-spacing: -0.44px;
+    margin: 0;
+}
+
+/* 구분선 */
+.vision-new-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #cbcbcb;
+    margin: 60px 0;
+}
+
+/* 미션 카드 컨테이너 */
+.mission-cards-new {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+/* 개별 카드 */
+.mission-card-new {
+    background: #fff;
+    border-left: 2px solid #3e8d91;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    min-height: 187px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.mission-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mission-card-title {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #3e8d91;
+    line-height: 1.2;
+    letter-spacing: -0.44px;
+    margin: 0;
+}
+
+.mission-card-subtitle {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #5e5e5e;
+    line-height: 1.6;
+    letter-spacing: -0.36px;
+    margin: 0;
+}
+
+.mission-card-desc {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #000;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ========================================
+   철학·비전·미션 반응형 - 태블릿
+   ======================================== */
+@media (max-width: 1024px) {
+    .vision-new-image {
+        height: 280px;
+        padding-left: 40px;
+    }
+
+    .vision-new-quote {
+        font-size: 20px;
+    }
+
+    .vision-new-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-top: 40px;
+    }
+
+    .vision-new-title {
+        font-size: 32px;
+    }
+
+    .vision-new-desc {
+        font-size: 18px;
+    }
+
+    .vision-new-divider {
+        margin: 50px 0;
+    }
+
+    .mission-card-new {
+        padding: 30px;
+        min-height: auto;
+    }
+
+    .mission-card-title {
+        font-size: 20px;
+    }
+
+    .mission-card-subtitle,
+    .mission-card-desc {
+        font-size: 16px;
+    }
+}
+
+/* ========================================
+   철학·비전·미션 반응형 - 모바일
+   ======================================== */
+@media (max-width: 768px) {
+    .vision-new-block {
+        margin-bottom: 40px;
+    }
+
+    .vision-new-image {
+        height: 220px;
+        padding: 20px;
+        align-items: flex-start;
+        padding-top: 30px;
+    }
+
+    .vision-new-quote {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .vision-new-content {
+        margin-top: 30px;
+        gap: 16px;
+    }
+
+    .vision-new-title {
+        font-size: 26px;
+    }
+
+    .vision-new-desc {
+        font-size: 15px;
+    }
+
+    .vision-new-divider {
+        margin: 40px 0;
+    }
+
+    .mission-cards-new {
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    .mission-card-new {
+        padding: 24px 20px;
+    }
+
+    .mission-card-title {
+        font-size: 18px;
+    }
+
+    .mission-card-subtitle {
+        font-size: 14px;
+    }
+
+    .mission-card-desc {
+        font-size: 14px;
+    }
+}
