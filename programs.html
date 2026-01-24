@@ -1339,6 +1339,10 @@
             color: var(--gray-dark);
         }
 
+        .research-support-table tbody tr:first-child td {
+            padding-top: 60px;
+        }
+
         .research-support-table tbody td.amount {
             text-align: right;
             color: #3E8D91;
@@ -2679,7 +2683,7 @@
                         </div>
 
                         <!-- 오른쪽: 연도별 지원 현황 테이블 -->
-                        <div class="research-support-table-area">
+                        <div class="research-support-table-area" style="max-height: 480px; overflow-y: auto;">
                             <table class="research-support-table">
                                 <thead>
                                     <tr>
