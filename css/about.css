@@ -490,7 +490,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
-    background: var(--primary);
+    background: #3E8D91;
 }
 
 .timeline-section {
@@ -513,7 +513,7 @@
 .timeline-era {
     font-size: 42px;
     font-weight: 700;
-    color: var(--primary);
+    color: #3E8D91;
     line-height: 1.2;
     margin-bottom: 8px;
 }
@@ -565,7 +565,7 @@
     width: 12px;
     height: 12px;
     background: var(--white);
-    border: 3px solid var(--primary);
+    border: 3px solid #3E8D91;
     border-radius: 50%;
     z-index: 1;
 }
