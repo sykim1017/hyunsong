@@ -76,17 +76,20 @@
         .board-section { padding: 20px 0; }
         .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .board-total { font-size: 14px; color: var(--gray); }
-        .board-total strong { color: #17A6ED; font-weight: 700; }
+        .board-total strong { color: #222222; font-weight: 700; }
         .board-search { display: flex; gap: 8px; }
         .board-search select { padding: 10px 16px; padding-right: 36px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; color: var(--gray-dark); background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
         .board-search input { padding: 10px 16px; border: 1px solid var(--gray-border); border-radius: 8px; font-size: 14px; width: 200px; }
-        .board-search button { padding: 10px 20px; background: #17A6ED; color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .board-search button { padding: 10px 20px; background: #1F2657; color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
 
         .board-list { border-top: 2px solid var(--primary); }
         .board-item { display: flex; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--gray-border); gap: 20px; }
         .board-item:hover { background: #FAFAFA; }
         .board-num { width: 60px; text-align: center; font-size: 14px; color: var(--gray-light); flex-shrink: 0; }
-        .board-category { width: 100px; padding: 4px 12px; background: var(--green-light); color: #17A6ED; font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; }
+        .board-category { width: 100px; padding: 4px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; flex-shrink: 0; text-align: center; }
+        .board-category.event { background: #E8F5E9; color: #2E7D32; }
+        .board-category.foundation { background: #E8F4FD; color: #4A7C9B; }
+        .board-category.scholarship { background: #FFF3E0; color: #EF6C00; }
         .board-title { flex: 1; font-size: 16px; color: var(--black); font-weight: 500; text-decoration: none; transition: color 0.2s; }
         .board-title:hover { color: #17A6ED; }
         .board-title .new { display: inline-block; margin-left: 8px; padding: 2px 6px; background: var(--lime); color: var(--white); font-size: 10px; font-weight: 700; border-radius: 4px; }
@@ -262,70 +265,70 @@
                 <div class="board-list">
                     <div class="board-item">
                         <span class="board-num">128</span>
-                        <span class="board-category">행사안내</span>
+                        <span class="board-category event">행사안내</span>
                         <a href="news-detail.html" class="board-title">2025년 상반기 장학생 선발 공고</a>
                         <span class="board-date">2025.01.02</span>
                         <span class="board-views">152</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">127</span>
-                        <span class="board-category">재단소식</span>
+                        <span class="board-category foundation">재단소식</span>
                         <a href="news-detail.html" class="board-title">재단 사무실 이전 안내</a>
                         <span class="board-date">2024.12.20</span>
                         <span class="board-views">89</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">126</span>
-                        <span class="board-category">장학금 지급현황</span>
+                        <span class="board-category scholarship">장학금 지급현황</span>
                         <a href="news-detail.html" class="board-title">2024년 장학증서 수여식 개최</a>
                         <span class="board-date">2024.12.15</span>
                         <span class="board-views">234</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">125</span>
-                        <span class="board-category">행사안내</span>
+                        <span class="board-category event">행사안내</span>
                         <a href="#" class="board-title">청소년 리더십 캠프 성료</a>
                         <span class="board-date">2024.12.10</span>
                         <span class="board-views">178</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">124</span>
-                        <span class="board-category">장학금 지급현황</span>
+                        <span class="board-category scholarship">장학금 지급현황</span>
                         <a href="#" class="board-title">2024년 하반기 장학금 지급 안내</a>
                         <span class="board-date">2024.12.01</span>
                         <span class="board-views">312</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">123</span>
-                        <span class="board-category">재단소식</span>
+                        <span class="board-category foundation">재단소식</span>
                         <a href="#" class="board-title">현송교육문화재단 창립 20주년 기념식</a>
                         <span class="board-date">2024.11.25</span>
                         <span class="board-views">456</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">122</span>
-                        <span class="board-category">행사안내</span>
+                        <span class="board-category event">행사안내</span>
                         <a href="#" class="board-title">2024년 학술연구지원 성과발표회 안내</a>
                         <span class="board-date">2024.11.20</span>
                         <span class="board-views">198</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">121</span>
-                        <span class="board-category">장학금 지급현황</span>
+                        <span class="board-category scholarship">장학금 지급현황</span>
                         <a href="#" class="board-title">외국인 대학원생 장학금 지급 완료</a>
                         <span class="board-date">2024.11.15</span>
                         <span class="board-views">267</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">120</span>
-                        <span class="board-category">재단소식</span>
+                        <span class="board-category foundation">재단소식</span>
                         <a href="#" class="board-title">재단 이사회 정기회의 결과 공지</a>
                         <span class="board-date">2024.11.10</span>
                         <span class="board-views">145</span>
                     </div>
                     <div class="board-item">
                         <span class="board-num">119</span>
-                        <span class="board-category">행사안내</span>
+                        <span class="board-category event">행사안내</span>
                         <a href="#" class="board-title">장학생 멘토링 프로그램 참가자 모집</a>
                         <span class="board-date">2024.11.05</span>
                         <span class="board-views">321</span>
