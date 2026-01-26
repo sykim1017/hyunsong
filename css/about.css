@@ -961,6 +961,12 @@
     height: 24px;
 }
 
+.ci-plus-text {
+    font-size: 24px;
+    color: #6A6A6A;
+    font-weight: 300;
+}
+
 .ci-meaning-logo {
     display: flex;
     flex-direction: column;
