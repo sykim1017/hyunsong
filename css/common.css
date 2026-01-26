@@ -5,9 +5,18 @@
 :root {
     --primary: #01B18B;
     --primary-light: rgba(148, 255, 186, 0.21);
+    --lime: rgba(228, 254, 243, 0.8);
+    --green-light: #EDF6E8;
     --text-dark: #3E3A39;
     --text-gray: #8E93A6;
+    --black: #222222;
+    --gray-dark: #333333;
+    --gray: #666666;
+    --gray-light: #999999;
+    --gray-pale: #CCCCCC;
+    --gray-border: #E5E5E5;
     --border: #C6C9D7;
+    --bg: #F5F5F5;
     --bg-light: #F2F3F8;
     --bg-card: #FBFCFF;
     --white: #FFFFFF;
