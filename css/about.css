@@ -921,80 +921,45 @@
 
 .ci-meaning-illustration {
     width: 479px;
-    height: 548px;
+    min-height: 548px;
     background: #fcfcf8;
     border-radius: 20px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 65px 90px;
+    justify-content: center;
+    padding: 50px 60px;
 }
 
-.ci-meaning-icons {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-    margin-bottom: 40px;
-}
 
-.ci-icon-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.ci-icon-item img {
-    height: 42px;
-}
-
-.ci-icon-item span {
-    font-size: 14px;
-    color: #000;
-    text-align: center;
-    letter-spacing: -0.28px;
-}
-
-.ci-plus-icon {
-    width: 24px;
-    height: 24px;
-}
-
-.ci-plus-text {
-    font-size: 24px;
-    color: #6A6A6A;
-    font-weight: 300;
+.ci-vertical-line {
+    width: 2px;
+    height: 80px;
+    background: #C0C0C0;
+    margin: 20px 0;
 }
 
 .ci-meaning-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    margin-top: auto;
 }
 
-.ci-meaning-logo > img {
-    width: 105px;
-    height: 86px;
+.ci-font-img {
+    max-width: 280px;
+    height: auto;
 }
 
-.ci-meaning-logo-text {
-    text-align: center;
+.ci-meaning-symbol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.ci-meaning-logo-text .korean {
-    font-size: 18px;
-    font-weight: 600;
-    color: #000;
-    margin-bottom: 4px;
-}
-
-.ci-meaning-logo-text .english {
-    font-size: 10px;
-    color: #888;
-    letter-spacing: 1px;
+.ci-meaning-symbol > img {
+    width: 120px;
+    height: auto;
 }
 
 /* CI 의미 텍스트 */
@@ -1225,11 +1190,6 @@
 
     .ci-section-card h3 {
         font-size: 18px;
-    }
-
-    .ci-meaning-icons {
-        flex-direction: column;
-        gap: 20px;
     }
 
     .ci-color-top {
