@@ -377,7 +377,33 @@
         }
 
         .program-intro {
+            display: flex;
             margin-bottom: 60px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .program-intro-image {
+            flex: 1;
+            min-height: 280px;
+            background: #e8edf2;
+        }
+
+        .program-intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .program-intro-text {
+            flex: 1;
+            padding: 40px;
+            background: #f0f2f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .program-intro-title {
@@ -386,6 +412,14 @@
             color: #3e3a39;
             margin-bottom: 20px;
             line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .program-intro-icon {
+            font-size: 32px;
+            color: #3e8d91;
         }
 
         .program-intro-desc {
@@ -672,6 +706,26 @@
                 display: block;
             }
 
+            .program-intro {
+                flex-direction: column;
+            }
+
+            .program-intro-image {
+                min-height: 200px;
+                flex: none;
+                aspect-ratio: 1 / 1;
+            }
+
+            .program-intro-text {
+                flex: none;
+                aspect-ratio: 1 / 1;
+                padding: 30px;
+            }
+
+            .program-intro-title {
+                font-size: 24px;
+            }
+
             .program-cards {
                 grid-template-columns: 1fr;
             }
@@ -768,6 +822,28 @@
 
             .program-intro-title {
                 font-size: 24px;
+            }
+
+            .program-intro-image {
+                aspect-ratio: auto;
+                min-height: 180px;
+            }
+
+            .program-intro-text {
+                aspect-ratio: auto;
+                padding: 24px 20px;
+            }
+
+            .program-intro-icon {
+                font-size: 26px;
+            }
+
+            .program-intro-title {
+                font-size: 20px;
+            }
+
+            .program-intro-desc {
+                font-size: 14px;
             }
         }
 
@@ -2090,8 +2166,16 @@
             <section id="scholarship" class="program-section">
                 <!-- 사업 소개 -->
                 <div class="program-intro">
-                    <h2 class="program-intro-title">장학사업</h2>
-                    <p class="program-intro-desc">국가발전에 기여할 수 있는 자질과 능력이 우수한 국내의 과학고, 공업고, 대학의 학부 및 석박사과정 학생들과 국내대학원 외국인 유학생들에게 장학금을 지급합니다.</p>
+                    <div class="program-intro-image">
+                        <img src="publish/scholarship-intro.png" alt="장학사업">
+                    </div>
+                    <div class="program-intro-text">
+                        <h2 class="program-intro-title">
+                            <span class="material-icons program-intro-icon">school</span>
+                            장학사업
+                        </h2>
+                        <p class="program-intro-desc">국가발전에 기여할 수 있는 자질과 능력이 우수한 국내의 과학고, 공업고, 대학의 학부 및 석박사과정 학생들과 국내대학원 외국인 유학생들에게 장학금을 지급합니다.</p>
+                    </div>
                 </div>
 
                 <!-- 장학사업 통계 섹션 -->
@@ -2423,8 +2507,16 @@
             <section id="research" class="program-section section-hidden">
                 <!-- 사업 소개 -->
                 <div class="program-intro">
-                    <h2 class="program-intro-title">학술연구지원사업</h2>
-                    <p class="program-intro-desc">국가발전에 기여할 수 있는 탁월한 학술 및 연구의 성과를 이룬 학자와 연구원을 포상하고 학술연구단체와 대학 그리고 학회 등을 지원합니다.</p>
+                    <div class="program-intro-image">
+                        <img src="publish/research-intro.png" alt="학술연구지원사업">
+                    </div>
+                    <div class="program-intro-text">
+                        <h2 class="program-intro-title">
+                            <span class="material-icons program-intro-icon">science</span>
+                            학술연구지원사업
+                        </h2>
+                        <p class="program-intro-desc">국가발전에 기여할 수 있는 탁월한 학술 및 연구의 성과를 이룬 학자와 연구원을 포상하고 학술연구단체와 대학 그리고 학회 등을 지원합니다.</p>
+                    </div>
                 </div>
 
                 <!-- 1. 학술연구지원비 통계 섹션 -->
@@ -2611,8 +2703,16 @@
             <section id="youth" class="program-section section-hidden">
                 <!-- 사업 소개 -->
                 <div class="program-intro">
-                    <h2 class="program-intro-title">청소년육성지원사업</h2>
-                    <p class="program-intro-desc">사회적으로 소외된 청소년 지원 및 청소년들의 심리적·정서적 안정을 유지하면서 학습역량을 향상시킬 수 있도록 지원합니다.</p>
+                    <div class="program-intro-image">
+                        <img src="publish/youth-intro.png" alt="청소년육성지원사업">
+                    </div>
+                    <div class="program-intro-text">
+                        <h2 class="program-intro-title">
+                            <span class="material-icons program-intro-icon">diversity_3</span>
+                            청소년육성지원사업
+                        </h2>
+                        <p class="program-intro-desc">사회적으로 소외된 청소년 지원 및 청소년들의 심리적·정서적 안정을 유지하면서 학습역량을 향상시킬 수 있도록 지원합니다.</p>
+                    </div>
                 </div>
 
                 <!-- 1. 청소년육성 및 사회단체 지원사업 통계 섹션 -->
@@ -2807,8 +2907,16 @@
             <section id="sports" class="program-section section-hidden">
                 <!-- 사업 소개 -->
                 <div class="program-intro">
-                    <h2 class="program-intro-title">체육인재육성지원사업</h2>
-                    <p class="program-intro-desc">럭비와 육상의 유망주와 국가대표 선수 육성을 위한 지원.</p>
+                    <div class="program-intro-image">
+                        <img src="publish/sports-intro.png" alt="체육인재육성지원사업">
+                    </div>
+                    <div class="program-intro-text">
+                        <h2 class="program-intro-title">
+                            <span class="material-icons program-intro-icon">sports_soccer</span>
+                            체육인재육성지원사업
+                        </h2>
+                        <p class="program-intro-desc">럭비와 육상의 유망주와 국가대표 선수 육성을 위한 지원.</p>
+                    </div>
                 </div>
 
                 <!-- 총 운영비+지원비 -->
