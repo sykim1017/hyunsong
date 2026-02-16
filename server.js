@@ -1,20 +1,14 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 9000;
 
-// 정적 파일 서빙 (css, svg 등)
+// /hyunsong/* 경로를 /* 로 rewrite
+// app.use('/hyunsong', express.static(__dirname));
+app.use("/", express.static(__dirname));
+
+// 루트 경로도 정적 파일 서빙
 app.use(express.static(__dirname));
-
-// 라우터
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'about.html'));
-});
-
-app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'about.html'));
-});
 
 app.listen(PORT, () => {
   console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
